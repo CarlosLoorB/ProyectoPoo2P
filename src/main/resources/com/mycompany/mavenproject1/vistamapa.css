@@ -1,0 +1,8 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+#paneMapal{
+    -fx-background-image: url('superficie_marte.jpeg');
+    -fx-background-size: 100% 100%;
+}
