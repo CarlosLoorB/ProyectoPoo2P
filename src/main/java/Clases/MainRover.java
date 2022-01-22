@@ -8,6 +8,6 @@ package Clases;
  *
  * @author CAELOS JR 2018
  */
-public class Rover {
+public abstract class MainRover implements InterfaceRover {
     
 }
