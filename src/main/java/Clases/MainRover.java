@@ -10,4 +10,19 @@ package Clases;
  */
 public abstract class MainRover implements InterfaceRover {
     
+    private String nombre;
+    private Ubicacion ubicacion;
+    
+    public MainRover(String nombre, Ubicacion ubicacion){
+        this.nombre = nombre;
+        this.ubicacion = ubicacion;
+    }
+    
+    public String getNombre(){
+        return nombre;
+    }
+    
+    public Ubicacion getUbicacion(){
+        return ubicacion;
+    }
 }
