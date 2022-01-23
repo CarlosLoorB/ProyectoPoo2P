@@ -34,9 +34,9 @@ public class VistaMapaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      /*  List<MainRover> rovers = RoverData.cargarRovers();
+       List<MainRover> rovers = RoverData.cargarRovers();
         pestanaRobot.getItems().addAll(rovers);
-*/
+
     }    
 
     @FXML
