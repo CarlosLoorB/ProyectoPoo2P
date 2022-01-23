@@ -4,7 +4,10 @@
  */
 package com.mycompany.mavenproject1;
 
+import Clases.MainRover;
+import DatosApp.RoverData;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +23,7 @@ import javafx.scene.layout.Pane;
 public class VistaMapaController implements Initializable {
 
     @FXML
-    private ComboBox<?> pestanaRobot;
+    private ComboBox<MainRover> pestanaRobot;
     @FXML
     private Pane paneMapa;
     @FXML
@@ -31,7 +34,9 @@ public class VistaMapaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+      /*  List<MainRover> rovers = RoverData.cargarRovers();
+        pestanaRobot.getItems().addAll(rovers);
+*/
     }    
 
     @FXML

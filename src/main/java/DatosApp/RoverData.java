@@ -4,10 +4,14 @@
  */
 package DatosApp;
 
+import Clases.MainRover;
+import Clases.RoverEolico;
+import Clases.RoverSolar;
 import Clases.Ubicacion;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Double.parseDouble;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,40 +22,26 @@ import java.util.List;
 public class RoverData {
     public static String ruta = "datos/tiendas.txt";
     
-    public static List<Rover> cargarRovers(Zona zona) {
+    public static List<MainRover> cargarRovers() {
         //cargarmos al informacion de los agentes
-        List<Agente> agentes = AgenteData.cargarAgentes();
-        System.out.println(agentes);
-        
-        List<Tienda> tiendas = new ArrayList<>();
-        try( BufferedReader bf = 
-                new BufferedReader(new FileReader(ruta)) ){
+        List<MainRover> rovers = new ArrayList();
+        try( BufferedReader bf =
+                new BufferedReader(new FileReader(ruta))  ){
             String linea;
             while((linea = bf.readLine())!=null){
-                //codigozona,nombretienda,ubx:uby,idAgente
-                //001,Luisito,400:100,090002
-                System.out.println(linea);
                 String[] p = linea.split(",");
-                if(p[0].equals(zona.getCodigo())){
-                    String[] u = p[2].split(":");
-                    Ubicacion ubicacion = new Ubicacion(Double.valueOf(u[0]),Double.valueOf(u[1]));
-
-                    //obtenemos el agente por el id
-                    Agente agente = 
-                            agentes.stream()
-                                    .filter( a -> a.getCedula().equals(p[3]))
-                                    .findFirst()
-                                    .orElse(null);
-
-                    Tienda t = new Tienda(p[1],ubicacion,agente);
-                    tiendas.add(t);
+                Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
+                if(p[3].equals("solar")){
+                    RoverSolar rover = new RoverSolar(p[0], u);
+                } else{
+                    RoverEolico rover = new RoverEolico(p[0], u);
                 }
-            }         
-        }  catch (IOException ex) {
-            System.out.println("no se pudo cargar la informacion de las tiendas");
+                
+            }
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return tiendas;
+        return rovers;
     }    
     
 }
