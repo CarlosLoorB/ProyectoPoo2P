@@ -31,8 +31,8 @@ public abstract class MainRover implements InterfaceRover {
     }  
     
     @Override
-    public void avanzar() {
-        
+    public void avanzar(int d) {
+       
     }
 
     @Override

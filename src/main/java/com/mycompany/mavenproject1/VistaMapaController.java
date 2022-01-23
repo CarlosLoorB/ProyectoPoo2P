@@ -6,6 +6,7 @@ package com.mycompany.mavenproject1;
 
 import Clases.Crater;
 import Clases.MainRover;
+import Clases.Ubicacion;
 import DatosApp.CraterData;
 import DatosApp.RoverData;
 import java.io.BufferedReader;
@@ -125,6 +126,12 @@ public class VistaMapaController implements Initializable {
 
     @FXML
     private void ejecutarComando(KeyEvent event) {
+        // tenemos el rover al que vamos a mover 
+        MainRover roverSelec = pestanaRobot.getValue();
+        int pos = Integer.valueOf(ventanaComando.getText());
+        roverSelec.avanzar(pos);
+        Ubicacion ubiActual = roverSelec.getUbicacion();
+        
     }
 
     

@@ -16,8 +16,7 @@ public class RoverSolar extends MainRover{
     }
 
     @Override
-    public void avanzar() {
-        
+    public void avanzar(int d) {
     }
 
     @Override

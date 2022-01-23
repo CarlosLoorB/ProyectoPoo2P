@@ -26,4 +26,9 @@ public class Ubicacion {
     public double getUbicacionY(){
         return ubicacionY;
     }
+    
+    public void setUbicacion(double x, double y){
+        this.ubicacionX = x;
+        this.ubicacionY = y;
+    }
 }

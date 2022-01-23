@@ -10,7 +10,7 @@ package Clases;
  */
 public interface InterfaceRover {
     
-    public void avanzar();
+    public void avanzar(int d);
     
     public void girar(int grados);
     

@@ -16,8 +16,7 @@ public class RoverEolico extends MainRover{
     }
 
     @Override
-    public void avanzar() {
-        
+    public void avanzar(int d) { 
     }
 
     @Override
