@@ -4,46 +4,39 @@
  */
 package DatosApp;
 
-import Clases.MainRover;
-import Clases.RoverEolico;
-import Clases.RoverSolar;
-import Clases.Ubicacion;
+import Clases.Crater;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author CAELOS JR 2018
+ * @author mluci
  */
-public class RoverData {
-    public static String ruta = "datos/rovers-1.txt";
+public class CraterData {
+     public static String ruta = "datos/crateres_info.txt";
     
-    public static List<MainRover> cargarRovers() {
+    public static List<Crater> cargarCrater() {
         //cargarmos al informacion de los agentes
-        List<MainRover> rovers = new ArrayList();
+        List<Crater> crateres = new ArrayList();
         try( BufferedReader bf =
                 new BufferedReader(new FileReader(ruta))  ){
             String linea;
             while((linea = bf.readLine())!=null){
                 String[] p = linea.split(",");
-                Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
-                if(p[3].equals("solar")){
-                    RoverSolar rover = new RoverSolar(p[0], u);
-                    rovers.add(rover);
-                } else{
-                    RoverEolico rover = new RoverEolico(p[0], u);
-                    rovers.add(rover);
-                }
+                Crater c = new Crater(parseInt(p[0]), p[1], parseDouble(p[2])
+                        , parseDouble(p[3]), parseDouble(p[4]));
+                crateres.add(c);
                 
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return rovers;        
+        return crateres;        
     }    
     
 }

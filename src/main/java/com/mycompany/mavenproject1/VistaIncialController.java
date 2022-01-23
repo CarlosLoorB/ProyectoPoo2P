@@ -4,10 +4,12 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -26,7 +28,10 @@ public class VistaIncialController implements Initializable {
     }    
 
     @FXML
-    private void botonExplorar(MouseEvent event) {
+    private void botonExplorar(MouseEvent event) 
+            throws IOException {
+        App.setRoot("VistaMapa");
+        
     }
 
     @FXML

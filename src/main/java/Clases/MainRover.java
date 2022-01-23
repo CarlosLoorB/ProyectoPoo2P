@@ -25,4 +25,8 @@ public abstract class MainRover implements InterfaceRover {
     public Ubicacion getUbicacion(){
         return ubicacion;
     }
+    
+    public String toString(){
+        return nombre;
+    }  
 }
