@@ -3,45 +3,38 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.VistaMapaController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.VistaMapaController">
    <children>
-      <SplitPane dividerPositions="0.7391304347826086" prefHeight="348.0" prefWidth="600.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="281.0" prefWidth="461.0">
+      <HBox prefHeight="803.0" prefWidth="900.0" spacing="10.0">
+         <children>
+            <Pane id="paneMapa" fx:id="paneMapa" prefHeight="750.0" prefWidth="1050.0" stylesheets="@vistamapa.css">
                <children>
-                  <Pane fx:id="paneMapa" layoutX="2.0" layoutY="-2.0" prefHeight="348.0" prefWidth="439.0" />
-                  <Pane id="paneMapal" fx:id="paneMapa1" layoutX="-3.0" layoutY="-8.0" prefHeight="364.0" prefWidth="454.0" stylesheets="@vistamapa.css" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="179.0">
+                  <StackPane fx:id="st1" prefHeight="750.0" prefWidth="1050.0" />
+               </children></Pane>
+            <VBox prefHeight="740.0" prefWidth="178.0" spacing="5.0">
                <children>
-                  <VBox prefHeight="348.0" prefWidth="153.0" spacing="5.0">
-                     <children>
-                        <ComboBox fx:id="pestanaRobot" onAction="#seleccionarRobot" prefWidth="150.0" promptText="robot" />
-                        <Label text="Ingrese comandos:" />
-                        <TextField />
-                        <Label prefHeight="17.0" prefWidth="131.0" text="Comandos ingresados:" />
-                        <TextArea prefHeight="163.0" prefWidth="137.0" />
-                     </children>
-                     <padding>
-                        <Insets left="10.0" right="15.0" top="10.0" />
-                     </padding>
-                  </VBox>
+                  <ComboBox fx:id="pestanaRobot" onAction="#seleccionarRobot" prefWidth="150.0" promptText="robot" />
+                  <Label text="Ingrese comandos:" />
+                  <TextField fx:id="ventanaComando" onKeyPressed="#ejecutarComando" />
+                  <Label prefHeight="17.0" prefWidth="131.0" text="Comandos ingresados:" />
+                  <TextArea fx:id="DispComando" prefHeight="163.0" prefWidth="134.0" />
+                  <Label fx:id="DescripcionCrater" />
                </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-      <Label text="Label" visible="false">
-         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </VBox.margin>
-      </Label>
+               <padding>
+                  <Insets left="10.0" right="15.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="7.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
    </children>
 </VBox>

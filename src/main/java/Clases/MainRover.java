@@ -29,4 +29,24 @@ public abstract class MainRover implements InterfaceRover {
     public String toString(){
         return nombre;
     }  
+    
+    @Override
+    public void avanzar() {
+        
+    }
+
+    @Override
+    public void girar(int grados) {
+        
+    }
+
+    @Override
+    public void dirigirse(double x, double y) {
+         
+    }
+
+    @Override
+    public String sensar() {
+       return null;
+    }
 }
