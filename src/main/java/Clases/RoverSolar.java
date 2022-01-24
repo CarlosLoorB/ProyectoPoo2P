@@ -5,14 +5,16 @@
  */
 package Clases;
 
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author USER
  */
 public class RoverSolar extends MainRover{
 
-    public RoverSolar(String nombre, Ubicacion ubicacion) {
-        super(nombre, ubicacion);
+    public RoverSolar(String nombre, Ubicacion ubicacion, ImageView imgview) {
+        super(nombre, ubicacion,imgview);
     }
 
     @Override
@@ -21,7 +23,11 @@ public class RoverSolar extends MainRover{
 
     @Override
     public void girar(int grados) {
-        
+        if(grados < 0){
+            imgview.setRotate(imgview.getRotate()+grados+360);
+        }else{
+           imgview.setRotate(imgview.getRotate()+grados);
+        }
     }
 
     @Override

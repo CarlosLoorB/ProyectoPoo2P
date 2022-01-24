@@ -5,23 +5,35 @@
  */
 package Clases;
 
+import javafx.scene.image.ImageView;
+
+
+
+
+
 /**
  *
  * @author USER
  */
 public class RoverEolico extends MainRover{
-
-    public RoverEolico(String nombre, Ubicacion ubicacion) {
-        super(nombre, ubicacion);
+    
+    public RoverEolico(String nombre, Ubicacion ubicacion,ImageView imgview) {
+        super(nombre, ubicacion, imgview);
     }
 
     @Override
-    public void avanzar(int d) { 
+    public void avanzar(int d) {
+        
     }
+    
 
     @Override
     public void girar(int grados) {
-        
+        if(grados < 0){
+            imgview.setRotate(imgview.getRotate()+grados+360);
+        }else{
+           imgview.setRotate(imgview.getRotate()+grados);
+        }
     }
 
     @Override

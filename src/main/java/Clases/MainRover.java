@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author CAELOS JR 2018
@@ -11,11 +13,13 @@ package Clases;
 public abstract class MainRover implements InterfaceRover {
     
     private String nombre;
-    private Ubicacion ubicacion;
+    protected ImageView imgview;
+    protected Ubicacion ubicacion;
     
-    public MainRover(String nombre, Ubicacion ubicacion){
+    public MainRover(String nombre, Ubicacion ubicacion, ImageView imgview){
         this.nombre = nombre;
         this.ubicacion = ubicacion;
+        this.imgview = imgview;
     }
     
     public String getNombre(){
@@ -24,6 +28,10 @@ public abstract class MainRover implements InterfaceRover {
     
     public Ubicacion getUbicacion(){
         return ubicacion;
+    }
+    
+    public ImageView getImgview(){
+        return imgview;
     }
     
     public String toString(){

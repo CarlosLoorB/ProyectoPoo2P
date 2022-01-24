@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -118,7 +120,7 @@ public class VistaMapaController implements Initializable {
         }
         st1.setAlignment(Pos.TOP_LEFT);
         st1.getChildren().clear();
-        st1.getChildren().addAll(imgview);
+        st1.getChildren().addAll(roverSelec.getImgview());
         st1.setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         st1.setLayoutY(roverSelec.getUbicacion().getUbicacionY());
 
@@ -126,13 +128,18 @@ public class VistaMapaController implements Initializable {
 
     @FXML
     private void ejecutarComando(KeyEvent event) {
-        // tenemos el rover al que vamos a mover 
-        MainRover roverSelec = pestanaRobot.getValue();
-        int pos = Integer.valueOf(ventanaComando.getText());
-        roverSelec.avanzar(pos);
-        Ubicacion ubiActual = roverSelec.getUbicacion();
         
+        MainRover roverSelec = pestanaRobot.getValue();
+        if(event.getCode() == KeyCode.ENTER){
+            if(ventanaComando.getText().contains("girar:")){
+                String[] lista = ventanaComando.getText().split(":");
+                roverSelec.girar(Integer.parseInt(lista[1]));
+                ventanaComando.clear();
+            }
+        }
     }
 
+    
+   
     
 }

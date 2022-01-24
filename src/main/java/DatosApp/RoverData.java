@@ -8,12 +8,16 @@ import Clases.MainRover;
 import Clases.RoverEolico;
 import Clases.RoverSolar;
 import Clases.Ubicacion;
+import com.mycompany.mavenproject1.App;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import static java.lang.Double.parseDouble;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -32,10 +36,14 @@ public class RoverData {
                 String[] p = linea.split(",");
                 Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
                 if(p[3].equals("solar")){
-                    RoverSolar rover = new RoverSolar(p[0], u);
+                    InputStream input = App.class.getResourceAsStream("rover.jpeg");
+                    ImageView imgview = new ImageView(new Image(input, 20,20,true,true));
+                    RoverSolar rover = new RoverSolar(p[0], u,imgview);
                     rovers.add(rover);
                 } else{
-                    RoverEolico rover = new RoverEolico(p[0], u);
+                    InputStream input = App.class.getResourceAsStream("rover.jpeg");
+                    ImageView imgview = new ImageView(new Image(input, 20,20,true,true));
+                    RoverEolico rover = new RoverEolico(p[0], u,imgview);
                     rovers.add(rover);
                 }
                 
