@@ -26,10 +26,12 @@ public class RoverSolar extends MainRover{
         double x = d*Math.cos(radianes);
         double y = d*Math.sin(radianes);
         
-        double  xi = imgview.getLayoutX();
-        double yi = imgview.getLayoutY();
+        imgview.setLayoutX(imgview.getLayoutX()+x);
+        imgview.setLayoutY(imgview.getLayoutY()+y);
         
-        ubicacion.setUbicacion(xi+x, yi+y);
+        ubicacion.setUbicacion(imgview.getLayoutX()+x, imgview.getLayoutY()+y);
+        
+        
         
     }
 

@@ -23,7 +23,16 @@ public class RoverEolico extends MainRover{
 
     @Override
     public void avanzar(int d) {
+        double grados = imgview.getRotate();
+        double radianes = Math.toRadians(grados);
         
+        double x = d*Math.cos(radianes);
+        double y = d*Math.sin(radianes);
+        
+        imgview.setLayoutX(imgview.getLayoutX()+x);
+        imgview.setLayoutY(imgview.getLayoutY()+y);
+        
+        ubicacion.setUbicacion(imgview.getLayoutX()+x, imgview.getLayoutY()+y);
     }
     
 
