@@ -52,11 +52,11 @@ public class VistaMapaController implements Initializable {
     @FXML
     private Label DescripcionCrater;
     @FXML
-    private StackPane st1;
-    @FXML
     private TextArea DispComando;
     @FXML
     private TextField ventanaComando;
+    @FXML
+    private Pane roverPane;
 
    
     /**
@@ -112,17 +112,16 @@ public class VistaMapaController implements Initializable {
                 HBox hbox = new HBox();
                 try {
                     InputStream input = App.class.getResource("rover.jpeg").openStream();
-                    Image img = new Image(input, 20, 20,false,false);
+                    Image img = new Image(input, 100, 100,false,false);
                     imgview = new ImageView(img);
                 } catch (NullPointerException | IOException ex) {
                     //no hay la imagen buscada
                     imgview = new ImageView();
         }
-        st1.setAlignment(Pos.TOP_LEFT);
-        st1.getChildren().clear();
-        st1.getChildren().addAll(roverSelec.getImgview());
-        st1.setLayoutX(roverSelec.getUbicacion().getUbicacionX());
-        st1.setLayoutY(roverSelec.getUbicacion().getUbicacionY());
+        roverPane.getChildren().clear();
+        roverPane.getChildren().addAll(roverSelec.getImgview());
+        roverPane.setLayoutX(roverSelec.getUbicacion().getUbicacionX());
+        roverPane.setLayoutY(roverSelec.getUbicacion().getUbicacionY());
 
     }
 
@@ -139,6 +138,10 @@ public class VistaMapaController implements Initializable {
             }else if(ventanaComando.getText().trim().contains("girar:")){
                 String[] lista = ventanaComando.getText().split(":");
                 roverSelec.girar(Integer.parseInt(lista[1]));
+                ventanaComando.clear();
+            }else if(ventanaComando.getText().trim().contains("hazlo:")){
+                String[] lista = ventanaComando.getText().split(":");
+                roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
                 ventanaComando.clear();
             }
         }

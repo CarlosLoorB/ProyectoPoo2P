@@ -50,7 +50,22 @@ public abstract class MainRover implements InterfaceRover {
 
     @Override
     public void dirigirse(double x, double y) {
-         
+        
+        //double grados = imgview.getRotate();
+        //double radianes = Math.toRadians(grados);
+        double xFinal = x - imgview.getLayoutX();
+        double yFinal = y - imgview.getLayoutY();
+        double hipotenusa = Math.sqrt(Math.pow(xFinal, 2)+ Math.pow(yFinal, 2));
+        double angulo = Math.atan(xFinal/yFinal);
+        System.out.println(hipotenusa);
+        System.out.println(angulo);
+        angulo = Math.toDegrees(angulo);
+        imgview.setRotate(angulo);
+        
+        imgview.setLayoutX(x);
+        imgview.setLayoutY(y);
+        
+        ubicacion.setUbicacion(imgview.getLayoutX()+x, imgview.getLayoutY()+y);
     }
 
     @Override

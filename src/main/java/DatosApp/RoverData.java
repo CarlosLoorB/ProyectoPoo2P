@@ -37,12 +37,12 @@ public class RoverData {
                 Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
                 if(p[3].equals("solar")){
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
-                    ImageView imgview = new ImageView(new Image(input, 20,20,true,true));
+                    ImageView imgview = new ImageView(new Image(input, 40,40,false,false));
                     RoverSolar rover = new RoverSolar(p[0], u,imgview);
                     rovers.add(rover);
                 } else{
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
-                    ImageView imgview = new ImageView(new Image(input, 20,20,true,true));
+                    ImageView imgview = new ImageView(new Image(input, 40,40,false,false));
                     RoverEolico rover = new RoverEolico(p[0], u,imgview);
                     rovers.add(rover);
                 }

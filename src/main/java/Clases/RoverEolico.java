@@ -44,12 +44,12 @@ public class RoverEolico extends MainRover{
            imgview.setRotate(imgview.getRotate()+grados);
         }
     }
-
+/*
     @Override
     public void dirigirse(double x, double y) {
          
     }
-
+*/
     @Override
     public String sensar() {
        return null;

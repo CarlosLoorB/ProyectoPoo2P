@@ -7,16 +7,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.VistaMapaController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.VistaMapaController">
    <children>
       <HBox prefHeight="803.0" prefWidth="900.0" spacing="10.0">
          <children>
             <Pane id="paneMapa" fx:id="paneMapa" prefHeight="750.0" prefWidth="1050.0" stylesheets="@vistamapa.css">
                <children>
-                  <StackPane fx:id="st1" prefHeight="750.0" prefWidth="1050.0" />
+                  <Pane fx:id="roverPane" prefHeight="200.0" prefWidth="200.0" />
                </children></Pane>
             <VBox prefHeight="740.0" prefWidth="178.0" spacing="5.0">
                <children>
