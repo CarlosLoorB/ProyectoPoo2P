@@ -19,6 +19,18 @@ public class RoverSolar extends MainRover{
 
     @Override
     public void avanzar(int d) {
+        
+        double grados = imgview.getRotate();
+        double radianes = Math.toRadians(grados);
+        
+        double x = d*Math.cos(radianes);
+        double y = d*Math.sin(radianes);
+        
+        double  xi = imgview.getLayoutX();
+        double yi = imgview.getLayoutY();
+        
+        ubicacion.setUbicacion(xi+x, yi+y);
+        
     }
 
     @Override

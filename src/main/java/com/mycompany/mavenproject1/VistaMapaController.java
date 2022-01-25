@@ -131,7 +131,12 @@ public class VistaMapaController implements Initializable {
         
         MainRover roverSelec = pestanaRobot.getValue();
         if(event.getCode() == KeyCode.ENTER){
-            if(ventanaComando.getText().contains("girar:")){
+            
+            if(ventanaComando.getText().contains("avanzar")){
+                roverSelec.avanzar(10);
+                ventanaComando.clear();
+                
+            }else if(ventanaComando.getText().contains("girar:")){
                 String[] lista = ventanaComando.getText().split(":");
                 roverSelec.girar(Integer.parseInt(lista[1]));
                 ventanaComando.clear();
