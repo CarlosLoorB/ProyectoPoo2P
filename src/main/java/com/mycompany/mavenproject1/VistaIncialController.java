@@ -7,6 +7,7 @@ package com.mycompany.mavenproject1;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -39,11 +40,14 @@ public class VistaIncialController implements Initializable {
     }
 
     @FXML
-    private void botonVerReportes(MouseEvent event) {
+    private void botonVerReportes(MouseEvent event)throws IOException {
+        
+        App.setRoot("VistaReporte");
     }
 
     @FXML
     private void botonSalir(MouseEvent event) {
+        Platform.exit();
     }
     
 }
