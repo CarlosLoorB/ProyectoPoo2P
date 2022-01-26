@@ -4,6 +4,9 @@
  */
 package Clases;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
 /**
  *
  * @author mluci
@@ -14,6 +17,7 @@ public class Crater {
     private double latitud;
     private double longitud;
     private double radio;
+    private Circle circulo;
     
     public Crater(int id, String nombre, double latitud, double longitud, double radio){
         this.id = id;
@@ -21,6 +25,7 @@ public class Crater {
         this.latitud = latitud;
         this.longitud = longitud;
         this.radio = radio;
+        this.circulo = new Circle(radio,new Color(0,0,0,0));
     }
     
     public int getId(){
@@ -41,6 +46,10 @@ public class Crater {
     
     public double getRadio(){
         return radio;
+    }
+    
+    public Circle getCirculo(){
+        return circulo;
     }
     
     public String toString(){

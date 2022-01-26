@@ -4,6 +4,9 @@
  */
 package Clases;
 
+import java.util.ArrayList;
+import javafx.scene.shape.Circle;
+
 /**
  *
  * @author CAELOS JR 2018

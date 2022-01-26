@@ -5,7 +5,10 @@
  */
 package Clases;
 
+import java.util.ArrayList;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 
 
@@ -17,8 +20,8 @@ import javafx.scene.image.ImageView;
  */
 public class RoverEolico extends MainRover{
     
-    public RoverEolico(String nombre, Ubicacion ubicacion,ImageView imgview) {
-        super(nombre, ubicacion, imgview);
+    public RoverEolico(String nombre, Ubicacion ubicacion,Rectangle rectangle) {
+        super(nombre, ubicacion, rectangle);
     }
 /*
     @Override
@@ -51,12 +54,12 @@ public class RoverEolico extends MainRover{
     public void dirigirse(double x, double y) {
          
     }
-*/
+
     @Override
     public String sensar() {
        return null;
     }
-
+*/
     @Override
     public void cargar() {
          

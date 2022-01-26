@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -36,7 +37,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * FXML Controller class
@@ -58,7 +61,7 @@ public class VistaMapaController implements Initializable {
     @FXML
     private Pane roverPane;
 
-   
+    private ArrayList<Circle> craters;
     /**
      * Initializes the controller class.
      */
@@ -68,7 +71,7 @@ public class VistaMapaController implements Initializable {
        pestanaRobot.getItems().addAll(rovers);
        List<Crater> crateres = CraterData.cargarCrater();
        for(Crater crater: crateres){
-           Circle c = new Circle(crater.getRadio(),new Color(0,0,0,0));
+           Circle c = crater.getCirculo();
            c.setStroke(Color.RED);
            StackPane st = new StackPane();
            st.getChildren().addAll(c);
@@ -108,18 +111,22 @@ public class VistaMapaController implements Initializable {
     private void seleccionarRobot(ActionEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
         System.out.println(roverSelec.getNombre());
+        Rectangle rec = new Rectangle();
         ImageView imgview = null;
                 HBox hbox = new HBox();
                 try {
                     InputStream input = App.class.getResource("rover.jpeg").openStream();
                     Image img = new Image(input, 100, 100,false,false);
-                    imgview = new ImageView(img);
+                    //imgview = new ImageView(img);
+                    rec.setStroke(Color.AQUA);
+                    //rec.setFill(new ImagePattern(img));
                 } catch (NullPointerException | IOException ex) {
                     //no hay la imagen buscada
-                    imgview = new ImageView();
+                    //imgview = new ImageView();
+                    rec = new Rectangle();
         }
         roverPane.getChildren().clear();
-        roverPane.getChildren().addAll(roverSelec.getImgview());
+        roverPane.getChildren().addAll(roverSelec.getRectangle());
         roverPane.setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverPane.setLayoutY(roverSelec.getUbicacion().getUbicacionY());
 
@@ -143,8 +150,13 @@ public class VistaMapaController implements Initializable {
                 String[] lista = ventanaComando.getText().split(":");
                 roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
                 ventanaComando.clear();
+            } else if(ventanaComando.getText().trim().contains("sensar")){
+                roverSelec.sensar();
+                ventanaComando.clear();
             }
         }
+        
+        
     }
 
     

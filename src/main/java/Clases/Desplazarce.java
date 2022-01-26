@@ -6,6 +6,7 @@ package Clases;
 
 import static java.lang.Thread.sleep;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -16,29 +17,33 @@ public class Desplazarce implements Runnable {
     private double xFinal;
     private double yFinal;
     private double hipotenusa;
-    private ImageView rover;
+    private Rectangle rectangle;
 
-    public Desplazarce(double xFinal, double yFinal, double hipotenusa, ImageView rover){
+    public Desplazarce(double xFinal, double yFinal, double hipotenusa, Rectangle rectangle){
         
         this.xFinal = xFinal;
         this.yFinal = yFinal;
         this.hipotenusa = hipotenusa;
-        this.rover = rover;
+        this.rectangle = rectangle;
     }
     
     @Override
     public void run() {
         try{
-        double cantIntervalos = Math.round(hipotenusa/10);
-        double intervalosx = xFinal/cantIntervalos;
-        double intervalosy = yFinal/cantIntervalos;
-        int repeticiones = 0;
-        while(repeticiones <= cantIntervalos){
-            rover.setLayoutX(rover.getLayoutX()+intervalosx);
-            rover.setLayoutY(rover.getLayoutY()+intervalosy);
-            repeticiones++;
-            sleep(1000);
-        }
+            if(xFinal == 0 && yFinal == 0){
+                System.out.println("mismo Lugar");
+            } else {
+                double cantIntervalos = Math.round(hipotenusa/10);
+                double intervalosx = xFinal/cantIntervalos;
+                double intervalosy = yFinal/cantIntervalos;
+                int repeticiones = 0;
+                while(repeticiones + 1 <= cantIntervalos){
+                    rectangle.setLayoutX(rectangle.getLayoutX() + intervalosx);
+                    rectangle.setLayoutY(rectangle.getLayoutY() + intervalosy);
+                    repeticiones++;
+                    sleep(500);
+                }
+            }     
         }catch(Exception ex){
             System.out.println("el pepe");
         }

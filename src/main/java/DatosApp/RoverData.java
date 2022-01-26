@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -32,18 +35,26 @@ public class RoverData {
         try( BufferedReader bf =
                 new BufferedReader(new FileReader(ruta))  ){
             String linea;
+            
             while((linea = bf.readLine())!=null){
                 String[] p = linea.split(",");
                 Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
                 if(p[3].equals("solar")){
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
-                    ImageView imgview = new ImageView(new Image(input, 40,40,false,false));
-                    RoverSolar rover = new RoverSolar(p[0], u,imgview);
+                    Image img = new Image(input, 40,40,false,false);
+                    Rectangle rec = new Rectangle(40,40);
+                    //rec.setStroke(Color.AQUA);
+                    rec.setFill(new ImagePattern(img));
+                    
+                    RoverSolar rover = new RoverSolar(p[0], u,rec);
                     rovers.add(rover);
                 } else{
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
-                    ImageView imgview = new ImageView(new Image(input, 40,40,false,false));
-                    RoverEolico rover = new RoverEolico(p[0], u,imgview);
+                    Image img = new Image(input, 40,40,false,false);
+                    Rectangle rec = new Rectangle(40,40);
+                   // rec.setStroke(Color.AQUA);
+                    rec.setFill(new ImagePattern(img));
+                    RoverEolico rover = new RoverEolico(p[0], u,rec);
                     rovers.add(rover);
                 }
                 
