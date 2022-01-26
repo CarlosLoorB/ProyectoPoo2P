@@ -17,9 +17,8 @@ public class RoverSolar extends MainRover{
         super(nombre, ubicacion,imgview);
     }
 
-    @Override
-    public void avanzar(int d) {
-        
+   // @Override
+   /* public void avanzar(int d) {
         double grados = imgview.getRotate();
         double radianes = Math.toRadians(grados);
         
@@ -33,8 +32,8 @@ public class RoverSolar extends MainRover{
         
         
         
-    }
-
+    }*/
+/*
     @Override
     public void girar(int grados) {
         if(grados < 0){
@@ -43,6 +42,7 @@ public class RoverSolar extends MainRover{
            imgview.setRotate(imgview.getRotate()+grados);
         }
     }
+    */
 /*
     @Override
     public void dirigirse(double x, double y) {

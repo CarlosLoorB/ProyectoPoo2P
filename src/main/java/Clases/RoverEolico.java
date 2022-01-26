@@ -20,7 +20,7 @@ public class RoverEolico extends MainRover{
     public RoverEolico(String nombre, Ubicacion ubicacion,ImageView imgview) {
         super(nombre, ubicacion, imgview);
     }
-
+/*
     @Override
     public void avanzar(int d) {
         double grados = imgview.getRotate();
@@ -35,7 +35,8 @@ public class RoverEolico extends MainRover{
         ubicacion.setUbicacion(imgview.getLayoutX()+x, imgview.getLayoutY()+y);
     }
     
-
+*/
+    /*
     @Override
     public void girar(int grados) {
         if(grados < 0){
@@ -44,6 +45,7 @@ public class RoverEolico extends MainRover{
            imgview.setRotate(imgview.getRotate()+grados);
         }
     }
+    */
 /*
     @Override
     public void dirigirse(double x, double y) {
