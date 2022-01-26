@@ -69,7 +69,6 @@ public abstract class MainRover implements InterfaceRover {
         yFinal = y - imgview.getLayoutY();
         xFinal = x - imgview.getLayoutX();
         double hipotenusa = Math.sqrt(Math.pow(xFinal, 2) + Math.pow(yFinal, 2));
-
         if (xFinal == 0 && yFinal > 0) {
             angulo = 90;
             imgview.setRotate(angulo);
@@ -94,13 +93,11 @@ public abstract class MainRover implements InterfaceRover {
             }
             System.out.println(angulo);
             imgview.setRotate(angulo);
-
-            imgview.setLayoutX(x);
-            imgview.setLayoutY(y);
-
-            ubicacion.setUbicacion(imgview.getLayoutX() + x, imgview.getLayoutY() + y);
         }
-
+        Thread t1 = new Thread(new Desplazarce(xFinal,yFinal,hipotenusa,imgview));
+        t1.setDaemon(true);
+        t1.start();
+//aqui se implementa el thread 
     }
 
     @Override
