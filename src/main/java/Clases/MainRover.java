@@ -6,8 +6,11 @@ package Clases;
 
 import DatosApp.CraterData;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -115,6 +118,7 @@ public abstract class MainRover implements InterfaceRover {
     @Override
     public String sensar() {
         ArrayList minerales = new ArrayList();
+        String mineral = null;
         try (BufferedReader inputStream
                 = new BufferedReader(new FileReader("datos/minerales.txt"))) {
             String linea = null;
@@ -132,18 +136,34 @@ public abstract class MainRover implements InterfaceRover {
             contador++;
             Circle circulo = c.getCirculo();
             
-            
             if (circulo.intersects(rectangle.boundsInLocalProperty().getValue())) {
-                System.out.println(c.getNombre() + contador);
-                System.out.println(circulo.boundsInLocalProperty().toString());
-            } else{
+                    System.out.println(c.getNombre() + contador);
+                    System.out.println(circulo.boundsInLocalProperty().toString());
+                    int max = minerales.size();
+                    int min = 0;
+                    int numero = (int) Math.floor(Math.random()*(max-min+1)+min);
+                    LocalDateTime fecha = LocalDateTime.now();
+                    String linea = c.getNombre()+";"+String.valueOf(fecha)+";";
+                    for(int x=0; x<numero; x++){
+                        linea += minerales.get(x)+",";
+                        mineral = linea.split(";")[2];
+                    }
+                try(BufferedWriter writer = new BufferedWriter(new FileWriter("datos/crateressense.txt"))){
+                    
+                    writer.write(linea);
+                        
+                    
+                }catch(IOException ex){
+                    System.out.println(ex.getMessage());
+                }
+            }else{
                 System.out.println("No funciona" + contador);
                 
             }
             
         }
 
-        return "hola";
+        return mineral;
 
     }
 
