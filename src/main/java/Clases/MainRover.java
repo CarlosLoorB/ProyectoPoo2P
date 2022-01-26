@@ -66,8 +66,6 @@ public abstract class MainRover implements InterfaceRover {
         double xFinal = 0;
         double yFinal = 0;
         double angulo = 0;
-        //double grados = imgview.getRotate();
-        //double radianes = Math.toRadians(grados);
         yFinal = y - imgview.getLayoutY();
         xFinal = x - imgview.getLayoutX();
         double hipotenusa = Math.sqrt(Math.pow(xFinal, 2) + Math.pow(yFinal, 2));
