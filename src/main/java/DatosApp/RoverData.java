@@ -43,9 +43,7 @@ public class RoverData {
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
                     Image img = new Image(input, 40,40,false,false);
                     Rectangle rec = new Rectangle(40,40);
-                    //rec.setStroke(Color.AQUA);
                     rec.setFill(new ImagePattern(img));
-                    
                     RoverSolar rover = new RoverSolar(p[0], u,rec);
                     rovers.add(rover);
                 } else{

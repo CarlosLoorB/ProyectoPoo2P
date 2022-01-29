@@ -61,7 +61,7 @@ public class VistaMapaController implements Initializable {
     @FXML
     private Pane roverPane;
 
-    private ArrayList<Circle> craters;
+    private List<Crater> craters;
     /**
      * Initializes the controller class.
      */
@@ -69,16 +69,14 @@ public class VistaMapaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        List<MainRover> rovers = RoverData.cargarRovers();
        pestanaRobot.getItems().addAll(rovers);
-       List<Crater> crateres = CraterData.cargarCrater();
-       for(Crater crater: crateres){
+       craters = CraterData.cargarCrater();
+       for(Crater crater: craters){
            Circle c = crater.getCirculo();
            c.setStroke(Color.RED);
-           StackPane st = new StackPane();
-           st.getChildren().addAll(c);
-           st.setLayoutX(crater.getLatitud());
-           st.setLayoutY(crater.getLongitud());
-           paneMapa.getChildren().addAll(st);
-           st.setOnMouseClicked((MouseEvent ev) -> {
+           paneMapa.getChildren().addAll(c);
+           c.setLayoutX(crater.getLatitud());
+           c.setLayoutY(crater.getLongitud());
+           c.setOnMouseClicked((MouseEvent ev) -> {
                ev.consume();
                try (BufferedReader Cs
                        = new BufferedReader(new FileReader("datos/crateressense.txt")); BufferedReader Cl
@@ -111,6 +109,7 @@ public class VistaMapaController implements Initializable {
     private void seleccionarRobot(ActionEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
         System.out.println(roverSelec.getNombre());
+        /*
         Rectangle rec = new Rectangle();
         ImageView imgview = null;
                 HBox hbox = new HBox();
@@ -125,10 +124,11 @@ public class VistaMapaController implements Initializable {
                     //imgview = new ImageView();
                     rec = new Rectangle();
         }
-        roverPane.getChildren().clear();
-        roverPane.getChildren().addAll(roverSelec.getRectangle());
-        roverPane.setLayoutX(roverSelec.getUbicacion().getUbicacionX());
-        roverPane.setLayoutY(roverSelec.getUbicacion().getUbicacionY());
+*/
+        paneMapa.getChildren().clear(); //se hace metodo.remove
+        paneMapa.getChildren().addAll(roverSelec.getRectangle());
+        roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
+        roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
 
     }
 
@@ -151,7 +151,7 @@ public class VistaMapaController implements Initializable {
                 roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
                 ventanaComando.clear();
             } else if(ventanaComando.getText().trim().contains("sensar")){
-                roverSelec.sensar();
+                roverSelec.sensar(craters);
                 ventanaComando.clear();
             }
         }

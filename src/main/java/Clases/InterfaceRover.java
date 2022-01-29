@@ -5,6 +5,7 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.shape.Circle;
 
 /**
@@ -19,7 +20,7 @@ public interface InterfaceRover {
     
     public void dirigirse(double x, double y);
     
-    public String sensar();
+    public String sensar(List<Crater> crateres);
     
     public void cargar();
     

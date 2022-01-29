@@ -116,7 +116,7 @@ public abstract class MainRover implements InterfaceRover {
     }
 
     @Override
-    public String sensar() {
+    public String sensar(List<Crater> crateres) {
         ArrayList minerales = new ArrayList();
         String mineral = null;
         try (BufferedReader inputStream
@@ -130,15 +130,12 @@ public abstract class MainRover implements InterfaceRover {
         }
         int contador = 0;
 
-        List<Crater> crateres = CraterData.cargarCrater();
         
         for (Crater c: crateres) {
             contador++;
             Circle circulo = c.getCirculo();
             
-            if (circulo.intersects(rectangle.boundsInLocalProperty().getValue())) {
-                    System.out.println(c.getNombre() + contador);
-                    System.out.println(circulo.boundsInLocalProperty().toString());
+            if (circulo.getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
                     int max = minerales.size();
                     int min = 0;
                     int numero = (int) Math.floor(Math.random()*(max-min+1)+min);
