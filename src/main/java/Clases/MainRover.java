@@ -12,9 +12,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -28,11 +31,15 @@ public abstract class MainRover implements InterfaceRover {
     private String nombre;
     protected Ubicacion ubicacion;
     private Rectangle rectangle;
+    private int bateria;
+    private double angulo;
     
-    public MainRover(String nombre, Ubicacion ubicacion, Rectangle rectangle){
+    public MainRover(String nombre, Ubicacion ubicacion, Rectangle rectangle,double angulo,int bateria){
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.rectangle = rectangle;
+        this.bateria = bateria;
+        this.angulo = angulo;
     }
     
     public String getNombre(){
@@ -52,7 +59,8 @@ public abstract class MainRover implements InterfaceRover {
     }  
     
     @Override
-    public void avanzar(int d) {
+    public void avanzar(int d) {   // actualizar posicion en el txt
+        if (bateria > 1){
        double grados = rectangle.getRotate();
         double radianes = Math.toRadians(grados);
         
@@ -63,19 +71,28 @@ public abstract class MainRover implements InterfaceRover {
         rectangle.setLayoutY(rectangle.getLayoutY()+y);
         
         ubicacion.setUbicacion(rectangle.getLayoutX()+x, rectangle.getLayoutY()+y);
+        bateria = bateria -1;
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("bateria");
+                    alert.setTitle("Error");
+                    alert.setContentText("bateria insuficiente para el movimiento");
+        }
     }
 
     @Override
     public void girar(int grados) {
         if(grados < 0){
             rectangle.setRotate(rectangle.getRotate()+grados+360);
+            angulo = rectangle.getRotate();
         }else{
            rectangle.setRotate(rectangle.getRotate()+grados);
+           angulo = rectangle.getRotate();
         }
     }
 
     @Override
-    public void dirigirse(double x, double y) {
+    public void dirigirse(double x, double y) {  //actualizar posicion en el txt
         double xFinal = 0;
         double yFinal = 0;
         double angulo = 0;
@@ -109,7 +126,7 @@ public abstract class MainRover implements InterfaceRover {
             System.out.println(angulo);
             rectangle.setRotate(angulo);
         }
-        Thread t1 = new Thread(new Desplazarce(xFinal,yFinal,hipotenusa,rectangle));
+        Thread t1 = new Thread(new Desplazarce(xFinal,yFinal,hipotenusa,rectangle,bateria));
         t1.setDaemon(true);
         t1.start();
 //aqui se implementa el thread 
@@ -117,47 +134,64 @@ public abstract class MainRover implements InterfaceRover {
 
     @Override
     public String sensar(List<Crater> crateres) {
-        ArrayList minerales = new ArrayList();
+        List<String> minerales = new ArrayList<>();
         String mineral = null;
         try (BufferedReader inputStream
                 = new BufferedReader(new FileReader("datos/minerales.txt"))) {
             String linea = null;
             while ((linea = inputStream.readLine()) != null) {
-                minerales.add(linea.split(","));
+                String [] strings = linea.split(",");
+            minerales = new ArrayList<String>(Arrays.asList(strings));
+
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         int contador = 0;
 
-        
-        for (Crater c: crateres) {
+        for (Crater c : crateres) {
             contador++;
             Circle circulo = c.getCirculo();
-            
+
             if (circulo.getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
-                    int max = minerales.size();
-                    int min = 0;
-                    int numero = (int) Math.floor(Math.random()*(max-min+1)+min);
-                    LocalDateTime fecha = LocalDateTime.now();
-                    String linea = c.getNombre()+";"+String.valueOf(fecha)+";";
-                    for(int x=0; x<numero; x++){
-                        linea += minerales.get(x)+",";
-                        mineral = linea.split(";")[2];
+                circulo.setFill(Color.RED);
+                int max = minerales.size();
+                int min = 0;
+                int CantMinerales = (int) Math.floor(Math.random() * 5 + 1);
+                System.out.println("cuanto minerales " + CantMinerales);
+                LocalDateTime fecha = LocalDateTime.now();
+                String linea = c.getId() + "," + c.getNombre() + "," + String.valueOf(fecha);
+                ArrayList<Integer> mineralesHallados = new ArrayList<>();
+                for (int x = 0; x < CantMinerales; x++) {
+                    int numeroMineral = (int) Math.floor(Math.random() * 5 + 1);
+                    System.out.println("numero random " + numeroMineral);
+                    while (mineralesHallados.contains(numeroMineral)) {
+                        numeroMineral = (int) Math.floor(Math.random() * 5 + 1);
+                        System.out.println("numero random esyaba repetido " + numeroMineral);
+
                     }
-                try(BufferedWriter writer = new BufferedWriter(new FileWriter("datos/crateressense.txt"))){
-                    
+                    mineralesHallados.add(numeroMineral);
+                    linea += ";" + (minerales.get(numeroMineral)).toString();
+                            if ( mineral != null){
+                                mineral = mineral + (minerales.get(numeroMineral)).toString()+"  ";
+                            }else{
+                                mineral = (minerales.get(numeroMineral)).toString()+"  ";
+                            }
+                }
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("datos/crateressense.txt"), 1)) { //asegurarse de que se sobrescriba
+
                     writer.write(linea);
-                        
-                    
-                }catch(IOException ex){
+                    writer.newLine();
+
+                } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
-            }else{
+
+            } else {
                 System.out.println("No funciona" + contador);
-                
+
             }
-            
+
         }
 
         return mineral;

@@ -20,8 +20,8 @@ import javafx.scene.shape.Rectangle;
  */
 public class RoverEolico extends MainRover{
     
-    public RoverEolico(String nombre, Ubicacion ubicacion,Rectangle rectangle) {
-        super(nombre, ubicacion, rectangle);
+    public RoverEolico(String nombre, Ubicacion ubicacion,Rectangle rectangle,double angulo,int bateria) {
+        super(nombre, ubicacion, rectangle, angulo, bateria);
     }
 /*
     @Override

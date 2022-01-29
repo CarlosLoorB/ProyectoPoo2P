@@ -5,6 +5,7 @@
 package Clases;
 
 import static java.lang.Thread.sleep;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
@@ -18,13 +19,15 @@ public class Desplazarce implements Runnable {
     private double yFinal;
     private double hipotenusa;
     private Rectangle rectangle;
+    private int bateria;
 
-    public Desplazarce(double xFinal, double yFinal, double hipotenusa, Rectangle rectangle){
+    public Desplazarce(double xFinal, double yFinal, double hipotenusa, Rectangle rectangle, int bateria){
         
         this.xFinal = xFinal;
         this.yFinal = yFinal;
         this.hipotenusa = hipotenusa;
         this.rectangle = rectangle;
+        this.bateria= bateria;
     }
     
     @Override
@@ -34,6 +37,7 @@ public class Desplazarce implements Runnable {
                 System.out.println("mismo Lugar");
             } else {
                 double cantIntervalos = Math.round(hipotenusa/10);
+                if (bateria >= cantIntervalos){
                 double intervalosx = xFinal/cantIntervalos;
                 double intervalosy = yFinal/cantIntervalos;
                 int repeticiones = 0;
@@ -41,12 +45,21 @@ public class Desplazarce implements Runnable {
                     rectangle.setLayoutX(rectangle.getLayoutX() + intervalosx);
                     rectangle.setLayoutY(rectangle.getLayoutY() + intervalosy);
                     repeticiones++;
+                    bateria = bateria -1;
                     sleep(500);
+                    
+                }
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("bateria");
+                    alert.setTitle("Error");
+                    alert.setContentText("bateria insuficiente para el movimiento");
                 }
             }     
         }catch(Exception ex){
-            System.out.println("el pepe");
+            System.out.println("el error fue "+ex.getStackTrace());
         }
+        
     }
     
 }

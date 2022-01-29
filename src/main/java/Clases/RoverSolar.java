@@ -16,8 +16,8 @@ import javafx.scene.shape.Rectangle;
  */
 public class RoverSolar extends MainRover{
 
-    public RoverSolar(String nombre, Ubicacion ubicacion,Rectangle rectangle) {
-        super(nombre, ubicacion, rectangle);
+    public RoverSolar(String nombre, Ubicacion ubicacion,Rectangle rectangle,double angulo,int bateria) {
+        super(nombre, ubicacion, rectangle ,angulo,bateria );
     }
 
    // @Override

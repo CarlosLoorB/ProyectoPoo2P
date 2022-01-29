@@ -40,11 +40,13 @@ public class RoverData {
                 String[] p = linea.split(",");
                 Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
                 if(p[3].equals("solar")){
-                    InputStream input = App.class.getResourceAsStream("rover.jpeg");
+                    InputStream input = App.class.getResourceAsStream("rover.jpeg");//hacer en ell constructor
                     Image img = new Image(input, 40,40,false,false);
                     Rectangle rec = new Rectangle(40,40);
-                    rec.setFill(new ImagePattern(img));
-                    RoverSolar rover = new RoverSolar(p[0], u,rec);
+                    rec.setFill(new ImagePattern(img)); // hasta aqui 
+                    int bateria = Integer.valueOf(p[5]);
+                    double angulo =  Double.parseDouble(p[4]);
+                    RoverSolar rover = new RoverSolar(p[0], u,rec,angulo,bateria);
                     rovers.add(rover);
                 } else{
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
@@ -52,7 +54,9 @@ public class RoverData {
                     Rectangle rec = new Rectangle(40,40);
                    // rec.setStroke(Color.AQUA);
                     rec.setFill(new ImagePattern(img));
-                    RoverEolico rover = new RoverEolico(p[0], u,rec);
+                    int bateria = Integer.valueOf(p[5]);
+                    double angulo =  Double.parseDouble(p[4]);
+                    RoverEolico rover = new RoverEolico(p[0], u,rec,angulo,bateria);
                     rovers.add(rover);
                 }
                 

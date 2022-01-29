@@ -85,14 +85,14 @@ public class VistaMapaController implements Initializable {
                    boolean encontrado = false;
                    while ((linea = Cs.readLine()) != null) {
                        String[] p = linea.split(",");
-                       if(Integer.valueOf(p[0]) == crater.getId()){
+                       if(Integer.parseInt(p[0]) == crater.getId()){
                          DescripcionCrater.setText(linea);
                          encontrado = true;
                        }
                    }
                    while ((linea = Cl.readLine()) != null && encontrado == false) {
                        String[] p = linea.split(",");
-                       if(Integer.valueOf(p[0]) == crater.getId()){
+                       if(Integer.parseInt(p[0]) == crater.getId()){
                          DescripcionCrater.setText(p[0]+","+p[1]);
                        }
                    }
@@ -125,7 +125,7 @@ public class VistaMapaController implements Initializable {
                     rec = new Rectangle();
         }
 */
-        paneMapa.getChildren().clear(); //se hace metodo.remove
+        //paneMapa.getChildren().clear(); //se hace metodo.remove
         paneMapa.getChildren().addAll(roverSelec.getRectangle());
         roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
@@ -151,7 +151,8 @@ public class VistaMapaController implements Initializable {
                 roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
                 ventanaComando.clear();
             } else if(ventanaComando.getText().trim().contains("sensar")){
-                roverSelec.sensar(craters);
+                String mineralHallado = roverSelec.sensar(craters);
+                DescripcionCrater.setText(mineralHallado);
                 ventanaComando.clear();
             }
         }
