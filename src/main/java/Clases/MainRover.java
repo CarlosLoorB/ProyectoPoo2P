@@ -5,6 +5,7 @@
 package Clases;
 
 import DatosApp.CraterData;
+import DatosApp.RoverData;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -52,6 +53,14 @@ public abstract class MainRover implements InterfaceRover {
     
     public Rectangle getRectangle(){
         return rectangle;
+    }
+    
+    public int getBateria(){
+        return bateria;
+    }
+    
+    public double getAngulo(){
+        return angulo;
     }
     
     public String toString(){
@@ -129,6 +138,8 @@ public abstract class MainRover implements InterfaceRover {
         Thread t1 = new Thread(new Desplazarce(xFinal,yFinal,hipotenusa,rectangle,bateria));
         t1.setDaemon(true);
         t1.start();
+        
+        
 //aqui se implementa el thread 
     }
 
@@ -178,8 +189,7 @@ public abstract class MainRover implements InterfaceRover {
                                 mineral = (minerales.get(numeroMineral)).toString()+"  ";
                             }
                 }
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter("datos/crateressense.txt"), 1)) { //asegurarse de que se sobrescriba
-
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("datos/crateressense.txt" , true))) { //asegurarse de que se sobrescriba
                     writer.write(linea);
                     writer.newLine();
 

@@ -21,7 +21,6 @@ public class CraterData {
      public static String ruta = "datos/crateres_info.txt";
     
     public static List<Crater> cargarCrater() {
-        //cargarmos al informacion de los agentes
         List<Crater> crateres = new ArrayList();
         try( BufferedReader bf =
                 new BufferedReader(new FileReader(ruta))  ){

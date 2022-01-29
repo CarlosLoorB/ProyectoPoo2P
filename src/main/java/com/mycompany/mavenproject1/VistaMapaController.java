@@ -108,24 +108,11 @@ public class VistaMapaController implements Initializable {
     @FXML
     private void seleccionarRobot(ActionEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
+       // if(roverSelec.getNombre().equals("wallie")){
+       //     paneMapa.getChildren().remove();
+      // }
         System.out.println(roverSelec.getNombre());
-        /*
-        Rectangle rec = new Rectangle();
-        ImageView imgview = null;
-                HBox hbox = new HBox();
-                try {
-                    InputStream input = App.class.getResource("rover.jpeg").openStream();
-                    Image img = new Image(input, 100, 100,false,false);
-                    //imgview = new ImageView(img);
-                    rec.setStroke(Color.AQUA);
-                    //rec.setFill(new ImagePattern(img));
-                } catch (NullPointerException | IOException ex) {
-                    //no hay la imagen buscada
-                    //imgview = new ImageView();
-                    rec = new Rectangle();
-        }
-*/
-        //paneMapa.getChildren().clear(); //se hace metodo.remove
+        
         paneMapa.getChildren().addAll(roverSelec.getRectangle());
         roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
@@ -141,19 +128,24 @@ public class VistaMapaController implements Initializable {
             if(ventanaComando.getText().trim().contains("avanzar")){
                 roverSelec.avanzar(10);
                 ventanaComando.clear();
-                
+                RoverData.actualizarRovers(roverSelec);
+                DispComando.setText(ventanaComando.getText() + "\n");
             }else if(ventanaComando.getText().trim().contains("girar:")){
                 String[] lista = ventanaComando.getText().split(":");
                 roverSelec.girar(Integer.parseInt(lista[1]));
                 ventanaComando.clear();
+                RoverData.actualizarRovers(roverSelec);
+                DispComando.setText(ventanaComando.getText());
             }else if(ventanaComando.getText().trim().contains("hazlo:")){
                 String[] lista = ventanaComando.getText().split(":");
                 roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
                 ventanaComando.clear();
+               RoverData.actualizarRovers(roverSelec);
             } else if(ventanaComando.getText().trim().contains("sensar")){
                 String mineralHallado = roverSelec.sensar(craters);
                 DescripcionCrater.setText(mineralHallado);
                 ventanaComando.clear();
+                RoverData.actualizarRovers(roverSelec);
             }
         }
         

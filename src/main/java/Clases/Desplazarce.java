@@ -4,6 +4,7 @@
  */
 package Clases;
 
+import DatosApp.RoverData;
 import static java.lang.Thread.sleep;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
@@ -55,7 +56,10 @@ public class Desplazarce implements Runnable {
                     alert.setTitle("Error");
                     alert.setContentText("bateria insuficiente para el movimiento");
                 }
-            }     
+                
+            
+            }
+            
         }catch(Exception ex){
             System.out.println("el error fue "+ex.getStackTrace());
         }

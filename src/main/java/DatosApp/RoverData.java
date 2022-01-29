@@ -10,15 +10,15 @@ import Clases.RoverSolar;
 import Clases.Ubicacion;
 import com.mycompany.mavenproject1.App;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import static java.lang.Double.parseDouble;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -67,4 +67,32 @@ public class RoverData {
         return rovers;        
     }    
     
+    public static void actualizarRovers(MainRover rover) {
+        
+        List<MainRover> rovers = cargarRovers();
+        MainRover r1 = rovers.get(0);
+        MainRover r2 = rovers.get(1);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta))) {
+            if (rover.getNombre().equals(r1.getNombre())){
+                String nLinea = rover.getNombre() + "," + Math.round(rover.getRectangle().getLayoutX()) + ","
+                         + Math.round(rover.getRectangle().getLayoutY()) + "," + "solar" + "," + Math.round(rover.getAngulo()) + "," + rover.getBateria();
+                bw.write(nLinea);
+                bw.newLine();
+                String nLinea2 = r2.getNombre() + "," + Math.round(r2.getRectangle().getLayoutX()) + ","
+                         + Math.round(r2.getRectangle().getLayoutY()) + "," + "eolico" + "," + Math.round(r2.getAngulo()) + "," + r2.getBateria();
+                bw.write(nLinea2);
+            } else {
+                String nLinea = r1.getNombre() + "," + Math.round(r1.getRectangle().getLayoutX()) + ","
+                        + Math.round(r1.getRectangle().getLayoutY()) + "," + "solar" + "," + Math.round(r1.getAngulo()) + "," + r1.getBateria();
+                bw.write(nLinea);
+                bw.newLine();
+                String nLinea2 = rover.getNombre() + "," + Math.round(rover.getRectangle().getLayoutX()) + ","
+                        + Math.round(rover.getRectangle().getLayoutY()) + "," + "eolico" + "," + Math.round(rover.getAngulo()) + "," + rover.getBateria();
+                bw.write(nLinea2);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
 }
