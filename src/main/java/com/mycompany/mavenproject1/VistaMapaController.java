@@ -138,9 +138,11 @@ public class VistaMapaController implements Initializable {
                 DispComando.setText(ventanaComando.getText());
             }else if(ventanaComando.getText().trim().contains("hazlo:")){
                 String[] lista = ventanaComando.getText().split(":");
+                synchronized(roverSelec){
                 roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
+                RoverData.actualizarRovers(roverSelec);
+                }
                 ventanaComando.clear();
-               RoverData.actualizarRovers(roverSelec);
             } else if(ventanaComando.getText().trim().contains("sensar")){
                 String mineralHallado = roverSelec.sensar(craters);
                 DescripcionCrater.setText(mineralHallado);
