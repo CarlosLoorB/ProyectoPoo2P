@@ -63,6 +63,11 @@ public abstract class MainRover implements InterfaceRover {
         return angulo;
     }
     
+    public void setBateria(int bateria){
+        this.bateria = bateria;
+    }
+    
+    @Override
     public String toString(){
         return nombre;
     }  
@@ -135,9 +140,18 @@ public abstract class MainRover implements InterfaceRover {
             System.out.println(angulo);
             rectangle.setRotate(angulo);
         }
-        Thread t1 = new Thread(new Desplazarce(xFinal,yFinal,hipotenusa,rectangle,bateria));
+        Desplazarce d = new Desplazarce(xFinal,yFinal,hipotenusa,rectangle,bateria);
+        Thread t1 = new Thread(d);
         t1.setDaemon(true);
-        t1.start();
+        t1.start();  //COMIENZA EL HILO
+        //COMO ESTA EN SINCRONIZADO *-*
+        
+        //roverSelec.setBateria(d.getBateria());
+        //Thread t2 = new Threas(new ActualizarDatos(roverSelec))
+        //t2.setDaemon(true);
+        //t2.start();
+        
+        
         
         
 //aqui se implementa el thread 
@@ -209,4 +223,4 @@ public abstract class MainRover implements InterfaceRover {
     }
 
 }
-//rectangle.getLayoutX(), rectangle.getLayoutY(), 40, 40   @2c7ee72c
+

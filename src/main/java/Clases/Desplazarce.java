@@ -31,6 +31,10 @@ public class Desplazarce implements Runnable {
         this.bateria= bateria;
     }
     
+    public int getBateria(){
+        return bateria;
+    }
+    
     @Override
     public void run() {
         try{

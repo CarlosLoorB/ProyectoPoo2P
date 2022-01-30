@@ -108,22 +108,15 @@ public class VistaMapaController implements Initializable {
     @FXML
     private void seleccionarRobot(ActionEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
-       // if(roverSelec.getNombre().equals("wallie")){
-       //     paneMapa.getChildren().remove();
-      // }
-        pestanaRobot.setOnMouseClicked((event2)->{
-            
+        pestanaRobot.setOnMouseClicked((event2)->{     
             Platform.runLater(()->{
                 paneMapa.getChildren().remove(roverSelec.getRectangle());
-            });
-        
+            });     
         });
-        System.out.println(roverSelec.getNombre());
-        
+        System.out.println(roverSelec.getNombre());      
         paneMapa.getChildren().addAll(roverSelec.getRectangle());
         roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
-
     }
 
     @FXML

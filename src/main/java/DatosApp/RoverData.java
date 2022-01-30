@@ -69,21 +69,23 @@ public class RoverData {
     
     public static void actualizarRovers(MainRover rover) {
         
+        
         List<MainRover> rovers = cargarRovers();
         MainRover r1 = rovers.get(0);
         MainRover r2 = rovers.get(1);
+        System.out.println(Math.round(r2.getRectangle().getLayoutX()));
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta))) {
             if (rover.getNombre().equals(r1.getNombre())){
                 String nLinea = rover.getNombre() + "," + Math.round(rover.getRectangle().getLayoutX()) + ","
                          + Math.round(rover.getRectangle().getLayoutY()) + "," + "solar" + "," + Math.round(rover.getAngulo()) + "," + rover.getBateria();
                 bw.write(nLinea);
                 bw.newLine();
-                String nLinea2 = r2.getNombre() + "," + Math.round(r2.getRectangle().getLayoutX()) + ","
-                         + Math.round(r2.getRectangle().getLayoutY()) + "," + "eolico" + "," + Math.round(r2.getAngulo()) + "," + r2.getBateria();
+                String nLinea2 = r2.getNombre() + "," + Math.round(r2.getUbicacion().getUbicacionX()) + ","
+                         + Math.round(r2.getUbicacion().getUbicacionY()) + "," + "eolico" + "," + r2.getAngulo() + "," + r2.getBateria();
                 bw.write(nLinea2);
             } else {
-                String nLinea = r1.getNombre() + "," + Math.round(r1.getRectangle().getLayoutX()) + ","
-                        + Math.round(r1.getRectangle().getLayoutY()) + "," + "solar" + "," + Math.round(r1.getAngulo()) + "," + r1.getBateria();
+                String nLinea = r1.getNombre() + "," + Math.round(r1.getUbicacion().getUbicacionX()) + ","
+                         + Math.round(r1.getUbicacion().getUbicacionY()) + "," + "eolico" + "," + r1.getAngulo() + "," + r1.getBateria();
                 bw.write(nLinea);
                 bw.newLine();
                 String nLinea2 = rover.getNombre() + "," + Math.round(rover.getRectangle().getLayoutX()) + ","
@@ -93,6 +95,6 @@ public class RoverData {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 }
