@@ -1,2 +1,2 @@
-wallie,90,70,solar,60.0,100
-chapie,100,100,eolico,76,100
+wallie,126,153,solar,240,90
+chapie,104,120,eolico,76.0,98

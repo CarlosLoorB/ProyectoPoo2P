@@ -129,18 +129,27 @@ public class VistaMapaController implements Initializable {
         
         MainRover roverSelec = pestanaRobot.getValue();
         if(event.getCode() == KeyCode.ENTER){
-            
+            String palabra = ventanaComando.getText().trim();
+            Platform.runLater(()->{
+                DispComando.appendText(palabra+"\n");
+                //DispComando.appendText(ventanaComando.getText() + "\n");
+            });
             if(ventanaComando.getText().trim().contains("avanzar")){
                 roverSelec.avanzar(10);
                 ventanaComando.clear();
                 RoverData.actualizarRovers(roverSelec);
-                DispComando.setText(ventanaComando.getText() + "\n");
+                
+                
             }else if(ventanaComando.getText().trim().contains("girar:")){
+                Platform.runLater(()->{
+                    DispComando.appendText(ventanaComando.getText()+"\n");
+                    //DispComando.appendText(ventanaComando.getText() + "\n");
+                });
                 String[] lista = ventanaComando.getText().split(":");
                 roverSelec.girar(Integer.parseInt(lista[1]));
                 ventanaComando.clear();
                 RoverData.actualizarRovers(roverSelec);
-                DispComando.setText(ventanaComando.getText());
+                
             }else if(ventanaComando.getText().trim().contains("hazlo:")){
                 String[] lista = ventanaComando.getText().split(":");
                     int cantIntervalos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
