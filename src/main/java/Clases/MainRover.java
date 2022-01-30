@@ -206,7 +206,7 @@ public abstract class MainRover implements InterfaceRover {
                 int CantMinerales = (int) Math.floor(Math.random() * 5 + 1);
                 System.out.println("cuanto minerales " + CantMinerales);
                 LocalDateTime fecha = LocalDateTime.now();
-                String linea = c.getId() + "," + c.getNombre() + "," + String.valueOf(fecha);
+                String linea = c.getId() + "," + c.getNombre() + "," + fecha;
                 ArrayList<Integer> mineralesHallados = new ArrayList<>();
                 for (int x = 0; x < CantMinerales; x++) {
                     int numeroMineral = (int) Math.floor(Math.random() * 5 + 1);
