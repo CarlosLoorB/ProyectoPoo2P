@@ -61,8 +61,10 @@ public class RoverEolico extends MainRover{
     }
 */
     @Override
-    public void cargar() {
-         
+    public int cargar() {
+         int cantIntervalos = super.dirigirse(100,100);
+         super.setBateria(100);
+         return cantIntervalos;
     }
     
 }

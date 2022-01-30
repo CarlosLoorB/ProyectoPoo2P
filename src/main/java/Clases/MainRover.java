@@ -31,7 +31,7 @@ public abstract class MainRover implements InterfaceRover {
     
     private String nombre;
     protected Ubicacion ubicacion;
-    private Rectangle rectangle;
+    Rectangle rectangle;
     private int bateria;
     private double angulo;
     
@@ -39,6 +39,7 @@ public abstract class MainRover implements InterfaceRover {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.rectangle = rectangle;
+        rectangle.setRotate(angulo);
         this.bateria = bateria;
         this.angulo = angulo;
     }
@@ -70,7 +71,20 @@ public abstract class MainRover implements InterfaceRover {
     @Override
     public String toString(){
         return nombre;
-    }  
+    }
+    
+    public boolean equals(Object o){
+            boolean verdad = false;
+        if (o instanceof MainRover){
+            MainRover comp = (MainRover)o;
+            if(nombre.equals(comp.nombre))
+                verdad = true;
+        }
+        else{
+            verdad =  false;
+        }
+        return verdad;
+    }
     
     @Override
     public void avanzar(int d) {   // actualizar posicion en el txt
@@ -106,8 +120,7 @@ public abstract class MainRover implements InterfaceRover {
     }
 
     @Override
-    public ArrayList<Double> dirigirse(double x, double y) {//actualizar posicion en el txt
-        ArrayList<Double> datos = new ArrayList<>();
+    public int dirigirse(double x, double y) {  //actualizar posicion en el txt
         double xFinal = 0;
         double yFinal = 0;
         double angulo = 0;
@@ -117,15 +130,19 @@ public abstract class MainRover implements InterfaceRover {
         if (xFinal == 0 && yFinal > 0) {
             angulo = 90;
             rectangle.setRotate(angulo);
+            this.angulo=angulo;
         } else if (xFinal == 0 && yFinal < 0) {
             angulo = -90;
             rectangle.setRotate(angulo);
+            this.angulo=angulo;
         } else if (xFinal > 0 && yFinal == 0) {
             angulo = 0;
             rectangle.setRotate(angulo);
+            this.angulo=angulo;
         } else if (xFinal < 0 && yFinal == 0) {
             angulo = 180;
             rectangle.setRotate(angulo);
+            this.angulo=angulo;
         } else if(xFinal == 0 && yFinal == 0){
    
         }else {
@@ -140,19 +157,22 @@ public abstract class MainRover implements InterfaceRover {
             }
             System.out.println(angulo);
             rectangle.setRotate(angulo);
+            this.angulo = angulo;
         }
-        datos.add(xFinal);
-        datos.add(yFinal);
-        datos.add(hipotenusa);
-          //COMIENZA EL HILO
+        long l = (Math.round(hipotenusa / 10));
+        int cantIntervalos = (int) l;
+        Desplazarce d = new Desplazarce(xFinal, yFinal, hipotenusa, rectangle, bateria);
+        Thread t1 = new Thread(d);
+        t1.setDaemon(true);
+        t1.start();  //COMIENZA EL HILO
         //COMO ESTA EN SINCRONIZADO *-*
-        return datos;
+        return cantIntervalos;
         //roverSelec.setBateria(d.getBateria());
         //Thread t2 = new Threas(new ActualizarDatos(roverSelec))
         //t2.setDaemon(true);
         //t2.start();
-        
-        
+
+
         
         
 //aqui se implementa el thread 

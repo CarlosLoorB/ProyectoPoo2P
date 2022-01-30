@@ -4,6 +4,7 @@
  */
 package DatosApp;
 
+import Clases.ActualizarDatos;
 import Clases.MainRover;
 import Clases.RoverEolico;
 import Clases.RoverSolar;
@@ -85,7 +86,7 @@ public class RoverData {
                 bw.write(nLinea2);
             } else {
                 String nLinea = r1.getNombre() + "," + Math.round(r1.getUbicacion().getUbicacionX()) + ","
-                         + Math.round(r1.getUbicacion().getUbicacionY()) + "," + "eolico" + "," + r1.getAngulo() + "," + r1.getBateria();
+                         + Math.round(r1.getUbicacion().getUbicacionY()) + "," + "solar" + "," + r1.getAngulo() + "," + r1.getBateria();
                 bw.write(nLinea);
                 bw.newLine();
                 String nLinea2 = rover.getNombre() + "," + Math.round(rover.getRectangle().getLayoutX()) + ","
@@ -96,5 +97,10 @@ public class RoverData {
             ex.printStackTrace();
         }
 
+    }
+    public static void actualizarRoversT(MainRover rover,int espera){
+        Thread t2 = new Thread(new ActualizarDatos(rover,espera));
+        t2.setDaemon(true);
+        t2.start();        
     }
 }

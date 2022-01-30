@@ -18,10 +18,10 @@ public interface InterfaceRover {
     
     public void girar(int grados);
     
-    public ArrayList<Double> dirigirse(double x, double y);
+    public int dirigirse(double x, double y);
     
     public String sensar(List<Crater> crateres);
     
-    public void cargar();
+    public int cargar();
     
 }

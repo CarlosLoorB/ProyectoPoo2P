@@ -58,8 +58,10 @@ public class RoverSolar extends MainRover{
     }
 */
     @Override
-    public void cargar() {
-        
+    public int cargar() {
+        super.rectangle.setRotate(270);
+        super.setBateria(100);
+        return 420;
     }
     
 }

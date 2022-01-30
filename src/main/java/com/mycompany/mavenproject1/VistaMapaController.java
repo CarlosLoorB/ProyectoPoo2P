@@ -8,6 +8,8 @@ import Clases.ActualizarDatos;
 import Clases.Crater;
 import Clases.Desplazarce;
 import Clases.MainRover;
+import Clases.RoverEolico;
+import Clases.RoverSolar;
 import Clases.Ubicacion;
 import DatosApp.CraterData;
 import DatosApp.RoverData;
@@ -69,6 +71,7 @@ public class VistaMapaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("hola");
        List<MainRover> rovers = RoverData.cargarRovers();
        pestanaRobot.getItems().addAll(rovers);
        craters = CraterData.cargarCrater();
@@ -140,23 +143,27 @@ public class VistaMapaController implements Initializable {
                 DispComando.setText(ventanaComando.getText());
             }else if(ventanaComando.getText().trim().contains("hazlo:")){
                 String[] lista = ventanaComando.getText().split(":");
-                synchronized (roverSelec) {
-                    ArrayList<Double> datos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
-                    Desplazarce d = new Desplazarce(datos.get(0), datos.get(1), datos.get(2), roverSelec);
-                    Thread t1 = new Thread(d);
-                    t1.setDaemon(true);
-                    t1.start();
-                    RoverData.actualizarRovers(roverSelec);
-                    Thread t2 = new Thread(new ActualizarDatos(roverSelec));
-                    t2.setDaemon(true);
-                    t2.start();
-                }
+                    int cantIntervalos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
+                    int espera = ((cantIntervalos * 100) + 100);
+                    roverSelec.setBateria(roverSelec.getBateria() - cantIntervalos);
+                    RoverData.actualizarRoversT(roverSelec,espera);
                 ventanaComando.clear();
             } else if (ventanaComando.getText().trim().contains("sensar")) {
                 String mineralHallado = roverSelec.sensar(craters);
                 DescripcionCrater.setText(mineralHallado);
                 ventanaComando.clear();
                 RoverData.actualizarRovers(roverSelec);
+            } else if (ventanaComando.getText().trim().contains("cargar")) {
+                if (roverSelec instanceof RoverEolico){
+                    RoverEolico rover = (RoverEolico)roverSelec;
+                    int cantIntervalos = rover.cargar();
+                    int espera = ((cantIntervalos * 100) + 100);
+                    RoverData.actualizarRoversT(roverSelec,espera);
+                } else if (roverSelec instanceof RoverSolar){
+                    RoverSolar rover = (RoverSolar)roverSelec;
+                    rover.cargar();
+                    RoverData.actualizarRovers(rover);
+                }    
             }
         }
         
