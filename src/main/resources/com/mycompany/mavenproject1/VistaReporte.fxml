@@ -42,9 +42,9 @@
             </HBox>
             <TableView fx:id="tbvTabla" prefHeight="260.0" prefWidth="600.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Fecha exploracion" />
-                <TableColumn prefWidth="75.0" text="Nombre Crater" />
-                  <TableColumn prefWidth="75.0" text="Minerales Encontrados" />
+                <TableColumn fx:id="columnaFecha" prefWidth="75.0" text="Fecha exploracion" />
+                <TableColumn fx:id="columnaNombre" prefWidth="75.0" text="Nombre Crater" />
+                  <TableColumn fx:id="columnaMinerales" prefWidth="75.0" text="Minerales Encontrados" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
