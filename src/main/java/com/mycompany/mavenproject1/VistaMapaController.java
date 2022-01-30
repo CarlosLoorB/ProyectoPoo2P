@@ -111,6 +111,13 @@ public class VistaMapaController implements Initializable {
        // if(roverSelec.getNombre().equals("wallie")){
        //     paneMapa.getChildren().remove();
       // }
+        pestanaRobot.setOnMouseClicked((event2)->{
+            
+            Platform.runLater(()->{
+                paneMapa.getChildren().remove(roverSelec.getRectangle());
+            });
+        
+        });
         System.out.println(roverSelec.getNombre());
         
         paneMapa.getChildren().addAll(roverSelec.getRectangle());
