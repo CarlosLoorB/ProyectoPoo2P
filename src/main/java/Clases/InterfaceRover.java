@@ -18,7 +18,7 @@ public interface InterfaceRover {
     
     public void girar(int grados);
     
-    public void dirigirse(double x, double y);
+    public ArrayList<Double> dirigirse(double x, double y);
     
     public String sensar(List<Crater> crateres);
     

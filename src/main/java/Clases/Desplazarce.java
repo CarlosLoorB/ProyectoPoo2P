@@ -19,20 +19,18 @@ public class Desplazarce implements Runnable {
     private double xFinal;
     private double yFinal;
     private double hipotenusa;
-    private Rectangle rectangle;
-    private int bateria;
+    private MainRover Rover;
 
-    public Desplazarce(double xFinal, double yFinal, double hipotenusa, Rectangle rectangle, int bateria){
+    public Desplazarce(double xFinal, double yFinal, double hipotenusa, MainRover Rover){
         
         this.xFinal = xFinal;
         this.yFinal = yFinal;
         this.hipotenusa = hipotenusa;
-        this.rectangle = rectangle;
-        this.bateria= bateria;
+        this.Rover=Rover;
     }
     
     public int getBateria(){
-        return bateria;
+        return Rover.getBateria();
     }
     
     @Override
@@ -42,15 +40,16 @@ public class Desplazarce implements Runnable {
                 System.out.println("mismo Lugar");
             } else {
                 double cantIntervalos = Math.round(hipotenusa/10);
-                if (bateria >= cantIntervalos){
+                if (Rover.getBateria() >= cantIntervalos){
                 double intervalosx = xFinal/cantIntervalos;
                 double intervalosy = yFinal/cantIntervalos;
                 int repeticiones = 0;
                 while(repeticiones + 1 <= cantIntervalos){
-                    rectangle.setLayoutX(rectangle.getLayoutX() + intervalosx);
-                    rectangle.setLayoutY(rectangle.getLayoutY() + intervalosy);
+                    Rover.getRectangle().setLayoutX(Rover.getRectangle().getLayoutX() + intervalosx);
+                    Rover.getRectangle().setLayoutY(Rover.getRectangle().getLayoutY() + intervalosy);
                     repeticiones++;
-                    bateria = bateria -1;
+                    int nuevaBat= Rover.getBateria() -1;
+                    Rover.setBateria(nuevaBat) ;
                     sleep(500);
                     
                 }

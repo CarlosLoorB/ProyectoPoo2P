@@ -4,7 +4,9 @@
  */
 package com.mycompany.mavenproject1;
 
+import Clases.ActualizarDatos;
 import Clases.Crater;
+import Clases.Desplazarce;
 import Clases.MainRover;
 import Clases.Ubicacion;
 import DatosApp.CraterData;
@@ -138,12 +140,19 @@ public class VistaMapaController implements Initializable {
                 DispComando.setText(ventanaComando.getText());
             }else if(ventanaComando.getText().trim().contains("hazlo:")){
                 String[] lista = ventanaComando.getText().split(":");
-                synchronized(roverSelec){
-                roverSelec.dirigirse(Double.parseDouble(lista[1]),Double.parseDouble(lista[2]));
-                RoverData.actualizarRovers(roverSelec);
+                synchronized (roverSelec) {
+                    ArrayList<Double> datos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
+                    Desplazarce d = new Desplazarce(datos.get(0), datos.get(1), datos.get(2), roverSelec);
+                    Thread t1 = new Thread(d);
+                    t1.setDaemon(true);
+                    t1.start();
+                    RoverData.actualizarRovers(roverSelec);
+                    Thread t2 = new Thread(new ActualizarDatos(roverSelec));
+                    t2.setDaemon(true);
+                    t2.start();
                 }
                 ventanaComando.clear();
-            } else if(ventanaComando.getText().trim().contains("sensar")){
+            } else if (ventanaComando.getText().trim().contains("sensar")) {
                 String mineralHallado = roverSelec.sensar(craters);
                 DescripcionCrater.setText(mineralHallado);
                 ventanaComando.clear();
