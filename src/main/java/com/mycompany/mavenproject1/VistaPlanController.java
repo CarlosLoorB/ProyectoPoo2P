@@ -8,6 +8,7 @@ import Clases.Crater;
 import Clases.MainRover;
 import DatosApp.CraterData;
 import DatosApp.RoverData;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,14 +16,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -30,14 +34,15 @@ import javafx.scene.layout.Pane;
  * @author CAELOS JR 2018
  */
 public class VistaPlanController implements Initializable {
-
-    private TextField cratereEnRuta;
-    @FXML
-    private GridPane crateresRuta;
     @FXML
     private TextField crateresEnRuta;
     @FXML
     private ComboBox<MainRover> seleccionRover;
+    @FXML
+    private VBox VboxPrincipal;
+    @FXML
+    private VBox VboxSec;
+    
     
     /**
      * Initializes the controller class.
@@ -46,6 +51,7 @@ public class VistaPlanController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         List<MainRover> rovers = RoverData.cargarRovers();
        seleccionRover.getItems().addAll(rovers);
+
         // TODO
     }        
     /**
@@ -108,9 +114,15 @@ public class VistaPlanController implements Initializable {
                 cratercerca = null;
             }
             int contador = 1;
-            crateresRuta.getChildren().clear();
+            VboxSec.getChildren().clear();
+            GridPane grid = new GridPane();
+            grid.add(new Label("Crateres Ordenados:"),0,0);
+            grid.setGridLinesVisible(true);
+            grid.setAlignment(Pos.CENTER);
+            VboxSec.getChildren().add(grid);
             for (Crater c : orden) {
-                crateresRuta.addRow(contador, new Label(contador +".- "+c.getNombre()));
+                
+                grid.add(new Label(contador +".- "+c.getNombre()),0,contador);
                 contador++;
             }
             if (orden.size() == 0 ){
@@ -129,6 +141,11 @@ public class VistaPlanController implements Initializable {
             }
         }
         
+    }
+
+    @FXML
+    private void Regresar(MouseEvent event) throws IOException {
+        App.setRoot("VistaIncial");
     }
 
 }
