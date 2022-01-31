@@ -30,7 +30,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class RoverData {
     public static String ruta = "datos/rovers-1.txt";
-    
+    /**
+     * Lee un archivo y carga los Rovers que esten dentro de este
+     * @return List<MainRover>
+     */
     public static List<MainRover> cargarRovers() {
         List<MainRover> rovers = new ArrayList();
         try( BufferedReader bf =
@@ -65,7 +68,10 @@ public class RoverData {
         }
         return rovers;        
     }    
-    
+    /**
+     * Escribe un archivo con los datos actualizados de los rovers
+     * @param rover MainRover
+     */
     public static void actualizarRovers(MainRover rover) {
         List<MainRover> rovers = cargarRovers();
         MainRover r1 = rovers.get(0);
@@ -93,6 +99,11 @@ public class RoverData {
             ex.printStackTrace();
         }
     }
+    /**
+     * Crea un archivo con los datos actualizados de los rovers usando un hilo
+     * @param rover MainRover
+     * @param espera int
+     */
     public static void actualizarRoversT(MainRover rover,int espera){
         Thread t2 = new Thread(new ActualizarDatos(rover,espera));
         t2.setDaemon(true);

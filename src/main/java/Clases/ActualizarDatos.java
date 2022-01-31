@@ -18,11 +18,17 @@ import java.util.List;
  *
  * @author mluci
  */
+
 public class ActualizarDatos implements Runnable {
 
     private MainRover rover;
     private int espera;
 
+    /**
+     * Constructor de ActualizarDatos
+     * @param rover recibe un MainRover
+     * @param espera recibe un int
+     */
     public ActualizarDatos(MainRover rover, int espera) {
         this.rover = rover;
         this.espera = espera;

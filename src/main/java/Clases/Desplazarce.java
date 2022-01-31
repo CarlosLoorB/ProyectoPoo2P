@@ -22,7 +22,15 @@ public class Desplazarce implements Runnable {
     private double hipotenusa;
     private Rectangle rectangle;
     private int bateria;
-
+    
+    /**
+     * Constructor de la clase Desplazarce
+     * @param xFinal recibe un double
+     * @param yFinal recibe un double
+     * @param hipotenusa recibe un double
+     * @param rectangle recibe un Rectangle
+     * @param bateria recibe un int
+     */
     public Desplazarce(double xFinal, double yFinal, double hipotenusa, Rectangle rectangle, int bateria){
         
         this.xFinal = xFinal;
@@ -31,7 +39,10 @@ public class Desplazarce implements Runnable {
         this.rectangle = rectangle;
         this.bateria= bateria;
     }
-    
+    /**
+     * Metodo para retornar la Bateria
+     * @return int
+     */
     public int getBateria(){
         return bateria;
     }

@@ -36,6 +36,14 @@ public abstract class MainRover implements InterfaceRover {
     private int bateria;
     private double angulo;
     
+    /**
+     * Constructor de la clase MainRover
+     * @param nombre String
+     * @param ubicacion Ubicacion
+     * @param rectangle Rectangle
+     * @param angulo double
+     * @param bateria int
+     */
     public MainRover(String nombre, Ubicacion ubicacion, Rectangle rectangle,double angulo,int bateria){
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -44,36 +52,61 @@ public abstract class MainRover implements InterfaceRover {
         this.bateria = bateria;
         this.angulo = angulo;
     }
-    
+    /**
+     * Retorna el nombre
+     * @return String
+     */
     public String getNombre(){
         return nombre;
     }
-    
+    /**
+     * Retorna la ubicacion
+     * @return Ubicacion
+     */
     public Ubicacion getUbicacion(){
         return ubicacion;
     }
-    
+    /**
+     * Retorna el rectangulo
+     * @return Rctangle
+     */
     public Rectangle getRectangle(){
         return rectangle;
     }
-    
+    /**
+     * Retorna la bateria
+     * @return int
+     */
     public int getBateria(){
         return bateria;
     }
-    
+    /**
+     * Retorna el angulo
+     * @return double
+     */
     public double getAngulo(){
         return angulo;
     }
-    
+    /**
+     * Establece el valor de la bateria
+     * @param bateria int
+     */
     public void setBateria(int bateria){
         this.bateria = bateria;
     }
-    
+    /**
+     * Metodo para transforma el objeto a un String
+     * @return String
+     */
     @Override
     public String toString(){
         return nombre;
     }
-    
+    /**
+     * Metodo para comparar si dos objetos son iguales
+     * @param o Objeto
+     * @return boolean
+     */
     public boolean equals(Object o){
             boolean verdad = false;
         if (o instanceof MainRover){
@@ -86,7 +119,10 @@ public abstract class MainRover implements InterfaceRover {
         }
         return verdad;
     }
-    
+    /**
+     * Permite que el objeto avance una cantidad de 10 espacios
+     * @param d int
+     */
     @Override
     public void avanzar(int d) {  
         if (bateria > 1){
@@ -108,7 +144,10 @@ public abstract class MainRover implements InterfaceRover {
                     alert.setContentText("bateria insuficiente para el movimiento");
         }
     }
-//dfdf
+    /**
+     * Permite que el objeto cambie su orientacion
+     * @param grados int
+     */
     @Override
     public void girar(int grados) {
         if(grados < 0){
@@ -119,7 +158,12 @@ public abstract class MainRover implements InterfaceRover {
            angulo = rectangle.getRotate();
         }
     }
-
+    /**
+     * Permite que el objeto se mueva a una ubicacion deseada, siempre y cuando la bateria se lo permita
+     * @param x double
+     * @param y double
+     * @return int
+     */
     @Override
     public int dirigirse(double x, double y) { 
         double xFinal = 0;
@@ -168,7 +212,11 @@ public abstract class MainRover implements InterfaceRover {
         t1.start();
         return cantIntervalos;  
     }
-
+    /**
+     * Permite detectar si el objeto esta interceptando con otro, si es asi detecta minerales
+     * @param crateres List<Crater>
+     * @return String
+     */
     @Override
     public String sensar(List<Crater> crateres) {
         List<String> minerales = new ArrayList<>();

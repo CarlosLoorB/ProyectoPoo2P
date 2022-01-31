@@ -20,8 +20,11 @@ import java.util.List;
  * @author mluci
  */
 public class CraterData {
-     public static String ruta = "datos/crateres_info.txt";
-    
+    public static String ruta = "datos/crateres_info.txt";
+    /**
+     * Lee un archivo y carga los crateres que esten dentro de este
+     * @return List<Crater>
+     */
     public static List<Crater> cargarCrater() {
         List<Crater> crateres = new ArrayList();
         try( BufferedReader bf =

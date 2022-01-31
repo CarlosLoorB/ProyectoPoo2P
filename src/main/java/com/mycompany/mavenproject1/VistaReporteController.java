@@ -48,13 +48,13 @@ public class VistaReporteController implements Initializable {
     private TableColumn<TableData, String> columnaNombre;
     @FXML
     private TableColumn<TableData, String> columnaMinerales;
-    /**
-     * Initializes the controller class.
-     */
-    
+  
     ObservableList<TableData> datosTabla = FXCollections.observableArrayList();
     List<CraterSensadoData> datosCrateres;
-    
+      
+    /**
+    * Initializes the controller class.
+    */  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -81,7 +81,10 @@ public class VistaReporteController implements Initializable {
         tablaOriginal();
         
     }    
-
+    /**
+     * Permite filtrar por fecha los reportes
+     * @param event 
+     */
     @FXML
     private void filtrarFecha(KeyEvent event) {
         
@@ -110,14 +113,18 @@ public class VistaReporteController implements Initializable {
             }
         }
     }
-    
+    /**
+     * Establece la tabla
+     */
     private void tablaOriginal() {
         
         datosCrateres.forEach(d -> datosTabla.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString())));
         tbvTabla.setItems(datosTabla);
         
     }
-    
+    /**
+     * Crea la tabla
+     */
     public static class TableData {
         
         private final SimpleStringProperty nombre;

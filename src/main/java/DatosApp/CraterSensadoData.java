@@ -24,25 +24,43 @@ public class CraterSensadoData {
     public String nombre;
     public LocalDate fecha;
     public List<String> minerales;
-    
+    /**
+     * Constructor de la clase CraterSensadoData
+     * @param nombre Stirng
+     * @param fecha LocalDate
+     * @param minerales List<String>
+     */
     public CraterSensadoData(String nombre, LocalDate fecha, List<String> minerales){
         this.nombre = nombre;
         this.fecha = fecha;
         this.minerales = minerales;
     }
-    
+    /**
+     * Obtiene el nombre 
+     * @return String
+     */
     public String getNombre(){
         return nombre;
     }
-    
+    /**
+     * Permite obtener la fecha
+     * @return LocalDate
+     */
     public LocalDate getFecha(){
         return fecha;
     }
-    
+    /**
+     * Retorna los minerales
+     * @return List<String>
+     */
     public List<String> getMinerales(){
         return minerales;
     }
-    
+    /**
+     * Lee un archivo y retorna los creteres sensados dentro de este
+     * @return List<CratersensadoDate>
+     * @throws IOException 
+     */
     public static List<CraterSensadoData> leerCratersSensados()throws IOException{
         List<CraterSensadoData> cratersSensados = new ArrayList<>();
         

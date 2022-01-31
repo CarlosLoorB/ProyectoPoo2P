@@ -66,7 +66,10 @@ public class VistaMapaController implements Initializable {
     private Pane roverPane;
 
     private List<Crater> craters;
-   
+    
+   /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("hola");
@@ -107,7 +110,10 @@ public class VistaMapaController implements Initializable {
            });
        }    
     }    
-
+    /**
+     * Permite seleccionar el rover deseado y mostrarlo en la pantalla
+     * @param event 
+     */
     @FXML
     private void seleccionarRobot(ActionEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
@@ -121,7 +127,10 @@ public class VistaMapaController implements Initializable {
         roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
     }
-//.
+    /**
+     * Permite leer el comando ingresado y ejecutarlo
+     * @param event 
+     */
     @FXML
     private void ejecutarComando(KeyEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
@@ -179,7 +188,6 @@ public class VistaMapaController implements Initializable {
                     alert.setContentText("Ingrese un comando correcto.");
                     alert.showAndWait();
                 }
-
             } catch (NumberFormatException x) {
                 ventanaComando.clear();
                 Alert alert = new Alert(Alert.AlertType.ERROR);

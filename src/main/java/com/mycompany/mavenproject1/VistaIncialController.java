@@ -27,26 +27,42 @@ public class VistaIncialController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
+    /**
+     * Boton que permite ingresar a la VistaMapa
+     * @param event MouseEvent
+     * @throws IOException 
+     */
     @FXML
     private void botonExplorar(MouseEvent event) 
             throws IOException {
         App.setRoot("VistaMapa");
         
     }
-
+     /**
+     * Boton que permite ingresar a la VistaPlan
+     * @param event MouseEvent
+     * @throws IOException 
+     */
     @FXML
     private void botonPlanificarRutas(MouseEvent event) {
     }
-
+    /**
+     * Boton que permite ingresar a la VistaPlan
+     * @param event MouseEvent
+     * @throws IOException 
+     */
     @FXML
     private void botonVerReportes(MouseEvent event)throws IOException {
         
         App.setRoot("VistaReporte");
     }
-
+    /**
+     * Boton que permite salir del programa
+     * @param event MouseEvent
+     * @throws IOException 
+     */
     @FXML
     private void botonSalir(MouseEvent event) {
         Platform.exit();
     }
-    //.
 }

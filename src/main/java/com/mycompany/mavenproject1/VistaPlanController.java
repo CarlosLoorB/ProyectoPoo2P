@@ -40,7 +40,10 @@ public class VistaPlanController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
-
+    /**
+     * Permite planificar la ruta mas cercana para recorrer los crateres
+     * @param event 
+     */
     @FXML
     private void buscarRuta(KeyEvent event) {
         MainRover roverSelec = seleccionRover.getValue();
