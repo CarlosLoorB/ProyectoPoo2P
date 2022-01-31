@@ -31,7 +31,6 @@ public class RoverData {
     public static String ruta = "datos/rovers-1.txt";
     
     public static List<MainRover> cargarRovers() {
-        //cargarmos al informacion de los agentes
         List<MainRover> rovers = new ArrayList();
         try( BufferedReader bf =
                 new BufferedReader(new FileReader(ruta))  ){
@@ -41,10 +40,10 @@ public class RoverData {
                 String[] p = linea.split(",");
                 Ubicacion u = new Ubicacion(parseDouble(p[1]), parseDouble(p[2]));
                 if(p[3].equals("solar")){
-                    InputStream input = App.class.getResourceAsStream("rover.jpeg");//hacer en ell constructor
+                    InputStream input = App.class.getResourceAsStream("rover.jpeg");
                     Image img = new Image(input, 40,40,false,false);
                     Rectangle rec = new Rectangle(40,40);
-                    rec.setFill(new ImagePattern(img)); // hasta aqui 
+                    rec.setFill(new ImagePattern(img));
                     int bateria = Integer.valueOf(p[5]);
                     double angulo =  Double.parseDouble(p[4]);
                     RoverSolar rover = new RoverSolar(p[0], u,rec,angulo,bateria);
@@ -53,14 +52,12 @@ public class RoverData {
                     InputStream input = App.class.getResourceAsStream("rover.jpeg");
                     Image img = new Image(input, 40,40,false,false);
                     Rectangle rec = new Rectangle(40,40);
-                   // rec.setStroke(Color.AQUA);
                     rec.setFill(new ImagePattern(img));
                     int bateria = Integer.valueOf(p[5]);
                     double angulo =  Double.parseDouble(p[4]);
                     RoverEolico rover = new RoverEolico(p[0], u,rec,angulo,bateria);
                     rovers.add(rover);
-                }
-                
+                } 
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -69,8 +66,6 @@ public class RoverData {
     }    
     
     public static void actualizarRovers(MainRover rover) {
-        
-        
         List<MainRover> rovers = cargarRovers();
         MainRover r1 = rovers.get(0);
         MainRover r2 = rovers.get(1);
@@ -96,7 +91,6 @@ public class RoverData {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
     public static void actualizarRoversT(MainRover rover,int espera){
         Thread t2 = new Thread(new ActualizarDatos(rover,espera));

@@ -66,9 +66,7 @@ public class VistaMapaController implements Initializable {
     private Pane roverPane;
 
     private List<Crater> craters;
-    /**
-     * Initializes the controller class.
-     */
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("hola");
@@ -126,60 +124,71 @@ public class VistaMapaController implements Initializable {
 
     @FXML
     private void ejecutarComando(KeyEvent event) {
-        
         MainRover roverSelec = pestanaRobot.getValue();
-        if(event.getCode() == KeyCode.ENTER){
+        if (event.getCode() == KeyCode.ENTER) {
             String palabra = ventanaComando.getText().trim();
-            
-            DispComando.appendText(palabra+"\n");
-                //DispComando.appendText(ventanaComando.getText() + "\n");
-            
-            if(ventanaComando.getText().trim().contains("avanzar")){
-                roverSelec.avanzar(10);
-                ventanaComando.clear();
-                RoverData.actualizarRovers(roverSelec);
-                
-                
-            }else if(ventanaComando.getText().trim().contains("girar:")){
-                
-                    
-                    //DispComando.appendText(ventanaComando.getText() + "\n");
-                
-                String[] lista = ventanaComando.getText().split(":");
-                roverSelec.girar(Integer.parseInt(lista[1]));
-                ventanaComando.clear();
-                RoverData.actualizarRovers(roverSelec);
-                
-            }else if(ventanaComando.getText().trim().contains("hazlo:")){
-                String[] lista = ventanaComando.getText().split(":");
+            DispComando.appendText(palabra + "\n");
+            try {
+                if (ventanaComando.getText().equals("avanzar")) {
+                    roverSelec.avanzar(10);
+                    ventanaComando.clear();
+                    RoverData.actualizarRovers(roverSelec);
+                } else if (ventanaComando.getText().trim().contains("girar:")) {
+                    String[] lista = ventanaComando.getText().split(":");
+                    if (lista.length == 2) {
+                        roverSelec.girar(Integer.parseInt(lista[1]));
+                        ventanaComando.clear();
+                        RoverData.actualizarRovers(roverSelec);
+                    } else {
+                        ventanaComando.clear();
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText(null);
+                        alert.setTitle("Comando invalido");
+                        alert.setContentText("Ingrese un solo angulo.");
+                        alert.showAndWait();
+                    }
+                } else if (ventanaComando.getText().trim().contains("hazlo:")) {
+                    String[] lista = ventanaComando.getText().split(":");
                     int cantIntervalos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
                     int espera = ((cantIntervalos * 100) + 100);
                     roverSelec.setBateria(roverSelec.getBateria() - cantIntervalos);
-                    RoverData.actualizarRoversT(roverSelec,espera);
-                ventanaComando.clear();
-            } else if (ventanaComando.getText().trim().contains("sensar")) {
-                String mineralHallado = roverSelec.sensar(craters);
-                DescripcionCrater.setText(mineralHallado);
-                ventanaComando.clear();
-                RoverData.actualizarRovers(roverSelec);
-            } else if (ventanaComando.getText().trim().contains("cargar")) {
-                if (roverSelec instanceof RoverEolico){
-                    RoverEolico rover = (RoverEolico)roverSelec;
-                    int cantIntervalos = rover.cargar();
-                    int espera = ((cantIntervalos * 100) + 100);
-                    RoverData.actualizarRoversT(roverSelec,espera);
-                } else if (roverSelec instanceof RoverSolar){
-                    RoverSolar rover = (RoverSolar)roverSelec;
-                    rover.cargar();
-                    RoverData.actualizarRovers(rover);
-                }    
-            }
-        }
-        
-        
-    }
+                    RoverData.actualizarRoversT(roverSelec, espera);
+                    ventanaComando.clear();
+                } else if (ventanaComando.getText().equals("sensar")) {
+                    String mineralHallado = roverSelec.sensar(craters);
+                    DescripcionCrater.setText(mineralHallado);
+                    ventanaComando.clear();
+                    RoverData.actualizarRovers(roverSelec);
+                } else if (ventanaComando.getText().equals("cargar")) {
+                    if (roverSelec instanceof RoverEolico) {
+                        RoverEolico rover = (RoverEolico) roverSelec;
+                        int cantIntervalos = rover.cargar();
+                        int espera = ((cantIntervalos * 100) + 100);
+                        ventanaComando.clear();
+                        RoverData.actualizarRoversT(roverSelec, espera);
+                    } else if (roverSelec instanceof RoverSolar) {
+                        RoverSolar rover = (RoverSolar) roverSelec;
+                        rover.cargar();
+                        RoverData.actualizarRovers(rover);
+                    }
+                } else {
+                    ventanaComando.clear();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Comando invalido");
+                    alert.setContentText("Ingrese un comando correcto.");
+                    alert.showAndWait();
+                }
 
-    
-   
-    
+            } catch (NumberFormatException x) {
+                ventanaComando.clear();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Comando invalido");
+                alert.setContentText("Ingrese numeros no letras.");
+                alert.showAndWait();
+            }
+
+        }
+    }
 }

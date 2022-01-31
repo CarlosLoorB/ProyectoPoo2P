@@ -88,7 +88,7 @@ public abstract class MainRover implements InterfaceRover {
     }
     
     @Override
-    public void avanzar(int d) {   // actualizar posicion en el txt
+    public void avanzar(int d) {  
         if (bateria > 1){
        double grados = rectangle.getRotate();
         double radianes = Math.toRadians(grados);
@@ -121,7 +121,7 @@ public abstract class MainRover implements InterfaceRover {
     }
 
     @Override
-    public int dirigirse(double x, double y) {  //actualizar posicion en el txt
+    public int dirigirse(double x, double y) { 
         double xFinal = 0;
         double yFinal = 0;
         double angulo = 0;
@@ -165,18 +165,8 @@ public abstract class MainRover implements InterfaceRover {
         Desplazarce d = new Desplazarce(xFinal, yFinal, hipotenusa, rectangle, bateria);
         Thread t1 = new Thread(d);
         t1.setDaemon(true);
-        t1.start();  //COMIENZA EL HILO
-        //COMO ESTA EN SINCRONIZADO *-*
-        return cantIntervalos;
-        //roverSelec.setBateria(d.getBateria());
-        //Thread t2 = new Threas(new ActualizarDatos(roverSelec))
-        //t2.setDaemon(true);
-        //t2.start();
-
-
-        
-        
-//aqui se implementa el thread 
+        t1.start();
+        return cantIntervalos;  
     }
 
     @Override
@@ -189,17 +179,14 @@ public abstract class MainRover implements InterfaceRover {
             while ((linea = inputStream.readLine()) != null) {
                 String [] strings = linea.split(",");
             minerales = new ArrayList<String>(Arrays.asList(strings));
-
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         int contador = 0;
-
         for (Crater c : crateres) {
             contador++;
             Circle circulo = c.getCirculo();
-
             if (circulo.getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
                 circulo.setFill(Color.RED);
                 int max = minerales.size();
@@ -215,7 +202,6 @@ public abstract class MainRover implements InterfaceRover {
                     while (mineralesHallados.contains(numeroMineral)) {
                         numeroMineral = (int) Math.floor(Math.random() * 5 + 1);
                         System.out.println("numero random esyaba repetido " + numeroMineral);
-
                     }
                     mineralesHallados.add(numeroMineral);
                     linea += ";" + (minerales.get(numeroMineral)).toString();
@@ -228,20 +214,14 @@ public abstract class MainRover implements InterfaceRover {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("datos/crateressense.txt" , true))) { //asegurarse de que se sobrescriba
                     writer.write(linea);
                     writer.newLine();
-
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
-
             } else {
                 System.out.println("No funciona" + contador);
-
             }
-
         }
-
         return mineral;
-
     }
 
 }
