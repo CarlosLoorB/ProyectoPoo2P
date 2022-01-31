@@ -81,13 +81,16 @@ public class VistaReporteController implements Initializable {
         tablaOriginal();
         
     }    
-    /**
-     * Permite filtrar por fecha los reportes
-     * @param event 
-     */
-    @FXML
-    private void filtrarFecha(KeyEvent event) {
+    
+    private void tablaOriginal() {
         
+        datosCrateres.forEach(d -> datosTabla.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString())));
+        tbvTabla.setItems(datosTabla);
+        
+    }
+
+    @FXML
+    private void filtrarExploracion(KeyEvent event) {
         datosTabla.clear();
         tbvTabla.getItems().clear();
         
@@ -113,18 +116,7 @@ public class VistaReporteController implements Initializable {
             }
         }
     }
-    /**
-     * Establece la tabla
-     */
-    private void tablaOriginal() {
-        
-        datosCrateres.forEach(d -> datosTabla.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString())));
-        tbvTabla.setItems(datosTabla);
-        
-    }
-    /**
-     * Crea la tabla
-     */
+    
     public static class TableData {
         
         private final SimpleStringProperty nombre;
