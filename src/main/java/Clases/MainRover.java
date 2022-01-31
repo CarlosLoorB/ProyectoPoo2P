@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -205,7 +206,7 @@ public abstract class MainRover implements InterfaceRover {
                 int min = 0;
                 int CantMinerales = (int) Math.floor(Math.random() * 5 + 1);
                 System.out.println("cuanto minerales " + CantMinerales);
-                LocalDateTime fecha = LocalDateTime.now();
+                LocalDate fecha = LocalDate.now();
                 String linea = c.getId() + "," + c.getNombre() + "," + fecha;
                 ArrayList<Integer> mineralesHallados = new ArrayList<>();
                 for (int x = 0; x < CantMinerales; x++) {

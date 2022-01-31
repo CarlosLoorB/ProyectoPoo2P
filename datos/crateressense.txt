@@ -1,2 +1,2 @@
-33,Seymour,2022-01-29T11:56:29.865981400;hematita
-12,Sayers,2022-01-30T14:45:37.209625800;opalina;filosilicatos;hematita;goethita
+33,Seymour,2022-01-29;hematita
+12,Sayers,2022-01-30;opalina;filosilicatos;hematita;goethita

@@ -8,11 +8,13 @@ package com.mycompany.mavenproject1;
 import DatosApp.CraterSensadoData;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,28 +41,23 @@ public class VistaReporteController implements Initializable {
     @FXML
     private TextField txtMaterial;
     @FXML
-    private TableView<CraterSensadoData> tbvTabla;
-    
-    private ObservableList<CraterSensadoData> craters;
+    private TableView<TableData> tbvTabla;
     @FXML
-    private TableColumn<CraterSensadoData, LocalDateTime> columnaFecha;
+    private TableColumn<TableData, String> columnaFecha;
     @FXML
-    private TableColumn<CraterSensadoData, String> columnaNombre;
+    private TableColumn<TableData, String> columnaNombre;
     @FXML
-    private TableColumn<CraterSensadoData, List<String>> columnaMinerales;
+    private TableColumn<TableData, String> columnaMinerales;
     /**
      * Initializes the controller class.
      */
-    private ObservableList<CraterSensadoData> cratersFecha;
+    
+    ObservableList<TableData> datosTabla = FXCollections.observableArrayList();
+    List<CraterSensadoData> datosCrateres;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            // TODO
-            tbvTabla.setItems((ObservableList<CraterSensadoData>) CraterSensadoData.leerCratersSensados());
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-       /*
+        
         Comparator<CraterSensadoData> cmp = ((CraterSensadoData csd1, CraterSensadoData csd2)->{
             int n = csd1.getNombre().compareTo(csd2.getNombre());
             if(n == 0){
@@ -72,39 +69,81 @@ public class VistaReporteController implements Initializable {
             
         });
         
-        cratersFecha.sort(cmp);
-        columnaFecha.setCellValueFactory(new PropertyValueFactory<CraterSensadoData,LocalDateTime>("fecha"));
-        columnaNombre.setCellValueFactory(new PropertyValueFactory<CraterSensadoData,String>("nombre"));
-        columnaMinerales.setCellValueFactory(new PropertyValueFactory<CraterSensadoData,List<String>>("minerales"));
+        try {
+            datosCrateres = CraterSensadoData.leerCratersSensados();
+            
+        } catch (IOException ex) {}
+        
+        columnaFecha.setCellValueFactory(new PropertyValueFactory<TableData, String>("fecha"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<TableData, String>("nombre"));
+        columnaMinerales.setCellValueFactory(new PropertyValueFactory<TableData, String>("minerales"));
        
-        craters = FXCollections.observableArrayList(cratersFecha);
-        tbvTabla.setItems(craters);
-        */
+        tablaOriginal();
         
     }    
 
     @FXML
     private void filtrarFecha(KeyEvent event) {
         
-        if(txtFechaInicio.getText()!=null && txtFechaFin.getText() != null){
+        datosTabla.clear();
+        tbvTabla.getItems().clear();
+        
+        LocalDate fechaInicio = null;
+        LocalDate fechaFin = null;
+        
+        try{
+            fechaInicio = LocalDate.parse(txtFechaInicio.getText().trim());
+            fechaFin = LocalDate.parse(txtFechaFin.getText().trim());
             
-            if(event.getCode() == KeyCode.ENTER){
-                try{
-                    for(CraterSensadoData csd : CraterSensadoData.leerCratersSensados()){
-                        if(csd.fecha.isBefore(LocalDateTime.parse(txtFechaInicio.getText().trim()))&& csd.fecha.isAfter(LocalDateTime.parse(txtFechaInicio.getText().trim()))) cratersFecha.add(csd);
-                          
-                    }
-                }catch(IOException ex){
-                    System.out.println(ex.getMessage());
-                }
-            }
+        }catch(Exception e) {
+            tablaOriginal();
         }
         
+        String material = txtMaterial.getText().trim();
+        if(fechaInicio !=null && fechaFin != null && material != null){
+            
+            for(CraterSensadoData d : datosCrateres){
+                if(d.getFecha().isBefore(fechaInicio) && 
+                        d.getFecha().isAfter(fechaFin) &&
+                            d.getMinerales().contains(material))
+                                datosTabla.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));
+            }
+        }
     }
+    
+    private void tablaOriginal() {
+        
+        datosCrateres.forEach(d -> datosTabla.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString())));
+        tbvTabla.setItems(datosTabla);
+        
+    }
+    
+    public static class TableData {
+        
+        private final SimpleStringProperty nombre;
+        private final SimpleStringProperty fecha;
+        private final SimpleStringProperty minerales;
+        
+        private TableData(String nombre, String fecha, String minerales) {
+            this.fecha = new SimpleStringProperty(fecha);
+            this.nombre = new SimpleStringProperty(nombre);
+            this.minerales = new SimpleStringProperty(minerales);
+        }
 
-    
+        public String getNombre() {
+            return nombre.get();
+        }
+
+        public String getFecha() {
+            return fecha.get();
+        }
+
+        public String getMinerales() {
+            return minerales.get();
+        }
         
         
-    
+        
+    }
     
 }

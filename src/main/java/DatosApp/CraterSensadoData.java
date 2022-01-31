@@ -8,6 +8,7 @@ package DatosApp;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +21,10 @@ import java.util.List;
 public class CraterSensadoData {
     
     public String nombre;
-    public LocalDateTime fecha;
+    public LocalDate fecha;
     public List<String> minerales;
     
-    public CraterSensadoData(String nombre, LocalDateTime fecha, List<String> minerales){
+    public CraterSensadoData(String nombre, LocalDate fecha, List<String> minerales){
         this.nombre = nombre;
         this.fecha = fecha;
         this.minerales = minerales;
@@ -33,7 +34,7 @@ public class CraterSensadoData {
         return nombre;
     }
     
-    public LocalDateTime getFecha(){
+    public LocalDate getFecha(){
         return fecha;
     }
     
@@ -50,7 +51,7 @@ public class CraterSensadoData {
                 String[] lista1 = linea.split(",");
                 String[] lista2 = lista1[2].split(";");
                 List<String> minerales = new ArrayList<>(Arrays.asList(lista2[1]));
-                cratersSensados.add(new CraterSensadoData(lista1[1],LocalDateTime.parse(lista1[2]),minerales));
+                cratersSensados.add(new CraterSensadoData(lista1[1],LocalDate.parse(lista2[0]),minerales));
             }
         }
         return cratersSensados;
