@@ -48,5 +48,5 @@ public class VistaIncialController implements Initializable {
     private void botonSalir(MouseEvent event) {
         Platform.exit();
     }
-    
+    //.
 }

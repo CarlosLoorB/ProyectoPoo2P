@@ -108,7 +108,7 @@ public abstract class MainRover implements InterfaceRover {
                     alert.setContentText("bateria insuficiente para el movimiento");
         }
     }
-
+//dfdf
     @Override
     public void girar(int grados) {
         if(grados < 0){

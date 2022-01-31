@@ -121,7 +121,7 @@ public class VistaMapaController implements Initializable {
         roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
     }
-
+//.
     @FXML
     private void ejecutarComando(KeyEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
