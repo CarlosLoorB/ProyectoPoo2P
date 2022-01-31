@@ -135,6 +135,15 @@ public class VistaMapaController implements Initializable {
     private void ejecutarComando(KeyEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
         if (event.getCode() == KeyCode.ENTER) {
+            if(roverSelec == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Comando invalido");
+                alert.setContentText("No se ha seleccionado rover");
+                alert.showAndWait();
+                ventanaComando.clear();
+                return;
+            }
             String palabra = ventanaComando.getText().trim();
             DispComando.appendText(palabra + "\n");
             try {
@@ -160,7 +169,15 @@ public class VistaMapaController implements Initializable {
                     String[] lista = ventanaComando.getText().split(":");
                     int cantIntervalos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
                     int espera = ((cantIntervalos * 100) + 100);
-                    roverSelec.setBateria(roverSelec.getBateria() - cantIntervalos);
+                    if (roverSelec.getBateria() > cantIntervalos) {
+                        roverSelec.setBateria(roverSelec.getBateria() - cantIntervalos);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("bateria");
+                        alert.setTitle("Error");
+                        alert.setContentText("bateria insuficiente para el movimiento");
+                        alert.showAndWait();
+                    }
                     RoverData.actualizarRoversT(roverSelec, espera);
                     ventanaComando.clear();
                 } else if (ventanaComando.getText().equals("sensar")) {

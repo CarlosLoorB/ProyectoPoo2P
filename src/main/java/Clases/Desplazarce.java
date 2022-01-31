@@ -71,6 +71,7 @@ public class Desplazarce implements Runnable {
                     alert.setHeaderText("bateria");
                     alert.setTitle("Error");
                     alert.setContentText("bateria insuficiente para el movimiento");
+                    alert.showAndWait();
                 }
                 
             

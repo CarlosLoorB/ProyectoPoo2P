@@ -56,13 +56,14 @@ public class VistaPlanController implements Initializable {
     private void buscarRuta(KeyEvent event) {
         MainRover roverSelec = seleccionRover.getValue();
         if (event.getCode() == KeyCode.ENTER) {
-            while(roverSelec == null){
+            if(roverSelec == null){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setTitle("Comando invalido");
                 alert.setContentText("No se ha seleccionado rover");
                 alert.showAndWait();
-                break;
+                crateresEnRuta.clear();
+                return;
             }
             System.out.println(roverSelec);
             double distCorta = 10000000;

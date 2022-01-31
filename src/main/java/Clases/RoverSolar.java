@@ -7,6 +7,7 @@ package Clases;
 
 
 import java.util.ArrayList;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -34,7 +35,15 @@ public class RoverSolar extends MainRover{
     @Override
     public int cargar() {
         int cantIntervalos = super.dirigirse(100, 100);
-        super.setBateria(100);
+        if (getBateria() > cantIntervalos) {
+                        super.setBateria(100);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("bateria");
+                        alert.setTitle("Error");
+                        alert.setContentText("bateria insuficiente para el movimiento, el robot ha quedado inutilizable");
+                        alert.showAndWait();
+                    }
         return cantIntervalos;
     }
 
