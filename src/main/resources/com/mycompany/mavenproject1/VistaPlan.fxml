@@ -24,7 +24,7 @@
             <ComboBox fx:id="seleccionRover" prefWidth="150.0" promptText="Rovers" />
          </children>
       </HBox>
-      <GridPane fx:id="crateresRuta" alignment="CENTER" prefHeight="230.0" prefWidth="367.0">
+      <GridPane fx:id="crateresRuta" alignment="CENTER" gridLinesVisible="true" prefHeight="230.0" prefWidth="42.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -32,8 +32,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <padding>
-            <Insets bottom="10.0" left="100.0" right="100.0" />
+            <Insets bottom="10.0" left="200.0" right="200.0" />
          </padding>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Crateres Ordenados" textAlignment="CENTER" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </GridPane>
    </children>
 </VBox>

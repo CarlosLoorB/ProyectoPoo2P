@@ -7,6 +7,7 @@ package com.mycompany.mavenproject1;
 import Clases.Crater;
 import Clases.MainRover;
 import DatosApp.CraterData;
+import DatosApp.RoverData;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +15,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -33,13 +38,16 @@ public class VistaPlanController implements Initializable {
     private TextField crateresEnRuta;
     @FXML
     private ComboBox<MainRover> seleccionRover;
-
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }    
+        List<MainRover> rovers = RoverData.cargarRovers();
+       seleccionRover.getItems().addAll(rovers);
+        // TODO
+    }        
     /**
      * Permite planificar la ruta mas cercana para recorrer los crateres
      * @param event 
@@ -47,13 +55,79 @@ public class VistaPlanController implements Initializable {
     @FXML
     private void buscarRuta(KeyEvent event) {
         MainRover roverSelec = seleccionRover.getValue();
-        List<Crater> infoCrateres = CraterData.cargarCrater();
-        String crateres = cratereEnRuta.getText();
-        String [] strings = crateres.split(",");
-        ArrayList<String> porBuscar = new ArrayList<String>(Arrays.asList(strings));
-        ArrayList<String> orden = new ArrayList<String>(Arrays.asList(strings));
-        
+        if (event.getCode() == KeyCode.ENTER) {
+            while(roverSelec == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Comando invalido");
+                alert.setContentText("No se ha seleccionado rover");
+                alert.showAndWait();
+                break;
+            }
+            System.out.println(roverSelec);
+            double distCorta = 10000000;
+            Crater cratercerca = null;
+            List<Crater> infoCrateres = CraterData.cargarCrater();
+            String crateres = crateresEnRuta.getText();
+            crateresEnRuta.clear();
+            double pos = roverSelec.getUbicacion().getUbicacionX();
+            double pos2 = roverSelec.getUbicacion().getUbicacionY();
+            String[] strings = crateres.split(",");
+            int longBusc = strings.length;
+            ArrayList<Crater> porBuscar = new ArrayList<>();
+            ArrayList<Crater> orden = new ArrayList<>();
+            for (String s : strings) {
+                System.out.println("las palabra" +s);
+                for (Crater c : infoCrateres) {
+                    System.out.println("los crateres "+ c.getNombre());
+                    if (s.equals(c.getNombre())) {
+                        System.out.println("la palabra "+s+" el crater "+c.getNombre());
+                        porBuscar.add(c);
+                    }
+                }
+            }
+            while (porBuscar.size() > 0) {
+                for (Crater c : porBuscar) {
+                    System.out.println("Adentro del for elemento "+ c.getNombre());
+                    double yFinal = c.getLongitud() - pos2;
+                    double xFinal = c.getLatitud() - pos;
+                    double distCortaPosible = Math.sqrt(Math.pow(xFinal, 2) + Math.pow(yFinal, 2));
+                    if (distCortaPosible < distCorta) {
+                        distCorta = distCortaPosible;
+                        cratercerca = c;
+                        System.out.println("Es el mas cercano "+cratercerca.getNombre());
+                    }
+                }
+                System.out.println("salimos del for");
+                orden.add(cratercerca);
+                porBuscar.remove(cratercerca);
+                pos = cratercerca.getLatitud();
+                pos2 = cratercerca.getLongitud();
+                distCorta = 10000000;
+                cratercerca = null;
+            }
+            int contador = 1;
+            crateresRuta.getChildren().clear();
+            for (Crater c : orden) {
+                crateresRuta.addRow(contador, new Label(contador +".- "+c.getNombre()));
+                contador++;
+            }
+            if (orden.size() == 0 ){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Comando invalido");
+                alert.setContentText("No se puesto ningun crater valido");
+                alert.showAndWait();
+            }
+            else if  (orden.size() < longBusc){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText(null);
+                alert.setTitle("Comando invalido");
+                alert.setContentText("Algunos valores de crater no fueron validos");
+                alert.showAndWait();
+            }
+        }
         
     }
-    
+
 }

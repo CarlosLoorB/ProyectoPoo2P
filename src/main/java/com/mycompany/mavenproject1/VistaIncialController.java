@@ -44,7 +44,8 @@ public class VistaIncialController implements Initializable {
      * @throws IOException 
      */
     @FXML
-    private void botonPlanificarRutas(MouseEvent event) {
+    private void botonPlanificarRutas(MouseEvent event) throws IOException {
+                App.setRoot("VistaPlan");
     }
     /**
      * Boton que permite ingresar a la VistaPlan
