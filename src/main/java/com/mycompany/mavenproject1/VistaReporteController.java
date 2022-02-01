@@ -57,7 +57,7 @@ public class VistaReporteController implements Initializable {
     */  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        /*
         Comparator<CraterSensadoData> cmp = ((CraterSensadoData csd1, CraterSensadoData csd2)->{
             int n = csd1.getNombre().compareTo(csd2.getNombre());
             if(n == 0){
@@ -68,7 +68,7 @@ public class VistaReporteController implements Initializable {
             return n;
             
         });
-        
+        */
         try {
             datosCrateres = CraterSensadoData.leerCratersSensados();
             
@@ -78,8 +78,9 @@ public class VistaReporteController implements Initializable {
         columnaNombre.setCellValueFactory(new PropertyValueFactory<TableData, String>("nombre"));
         columnaMinerales.setCellValueFactory(new PropertyValueFactory<TableData, String>("minerales"));
        
-        tablaOriginal();
         
+        tbvTabla.getItems().clear();
+        tablaOriginal();
     }    
     
     private void tablaOriginal() {
@@ -88,9 +89,9 @@ public class VistaReporteController implements Initializable {
         tbvTabla.setItems(datosTabla);
         
     }
-
-    @FXML
-    private void filtrarExploracion(KeyEvent event) {
+    
+    private ObservableList<TableData> filtrar(){
+        ObservableList<TableData> datos = FXCollections.observableArrayList();
         datosTabla.clear();
         tbvTabla.getItems().clear();
         
@@ -98,23 +99,75 @@ public class VistaReporteController implements Initializable {
         LocalDate fechaFin = null;
         
         try{
-            fechaInicio = LocalDate.parse(txtFechaInicio.getText().trim());
-            fechaFin = LocalDate.parse(txtFechaFin.getText().trim());
-            
+            fechaInicio = LocalDate.parse(txtFechaInicio.getText().toLowerCase().trim());
+            System.out.println("Esta es la fecha de inicio: "+fechaInicio);
+            fechaFin = LocalDate.parse(txtFechaFin.getText().toLowerCase().trim());
+            System.out.println("Esta es la fecha fin: "+fechaFin);
         }catch(Exception e) {
             tablaOriginal();
         }
         
-        String material = txtMaterial.getText().trim();
+        String material = txtMaterial.getText().toLowerCase().trim();
+        
         if(fechaInicio !=null && fechaFin != null && material != null){
             
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isBefore(fechaInicio) && 
-                        d.getFecha().isAfter(fechaFin) &&
+                if(d.getFecha().isAfter(fechaInicio) && 
+                        d.getFecha().isBefore(fechaFin) &&
                             d.getMinerales().contains(material))
-                                datosTabla.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));
+                            datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
+            }
+        }else if(fechaInicio == null && fechaFin != null && material!= null){
+            for(CraterSensadoData d : datosCrateres){
+                if(d.getFecha().isBefore(fechaFin) &&
+                        d.getMinerales().contains(material))
+                        datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
+            }
+        }else if(fechaInicio != null && fechaFin == null && material!= null){
+             for(CraterSensadoData d : datosCrateres){
+                if(d.getFecha().isAfter(fechaInicio) &&
+                        d.getMinerales().contains(material))
+                        datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
+            }
+        }else if(fechaInicio != null && fechaFin != null && material == null){
+            for(CraterSensadoData d : datosCrateres){
+                if(d.getFecha().isAfter(fechaInicio) &&
+                        d.getFecha().isBefore(fechaFin))
+                        datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
+            }
+        }else if(fechaInicio != null && fechaFin == null && material == null){
+            for(CraterSensadoData d : datosCrateres){
+                if(d.getFecha().isAfter(fechaInicio))
+                        datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
+            }
+        }else if(fechaInicio == null && fechaFin != null && material == null){
+            for(CraterSensadoData d : datosCrateres){
+                if(d.getFecha().isBefore(fechaFin))
+                        datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
+            }
+        }else if(fechaInicio == null && fechaFin == null && material != null){
+            for(CraterSensadoData d : datosCrateres){
+                if(d.getMinerales().contains(material))
+                        datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }
+        System.out.println("Esta es la fecha de inicio: "+fechaInicio);
+        System.out.println("Esta es la fecha fin: "+fechaFin);
+           
+        return datos;
+    }
+
+    @FXML
+    private void buscarExploracion(ActionEvent event) {
+        tbvTabla.getItems().clear();
+        tbvTabla.setItems(filtrar());
+      
+    }
+
+    @FXML
+    private void refrescarTabla(ActionEvent event) {
+        tbvTabla.getItems().clear();
+        tbvTabla.setItems(datosTabla);
     }
     
     public static class TableData {
