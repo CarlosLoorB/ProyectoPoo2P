@@ -102,9 +102,15 @@ public class VistaReporteController implements Initializable {
         try{
             fechaInicio = LocalDate.parse(txtFechaInicio.getText().toLowerCase().trim());
             System.out.println("Esta es la fecha de inicio: "+fechaInicio);
+            
+        }catch(Exception e) {
+            tablaOriginal();
+        }
+        
+        try{
             fechaFin = LocalDate.parse(txtFechaFin.getText().toLowerCase().trim());
             System.out.println("Esta es la fecha fin: "+fechaFin);
-        }catch(Exception e) {
+        }catch(Exception ex){
             tablaOriginal();
         }
         
@@ -113,7 +119,7 @@ public class VistaReporteController implements Initializable {
         if(fechaInicio !=null && fechaFin != null && material != null){
             
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isAfter(fechaInicio) || d.getFecha().equals(fechaInicio)&& 
+                if(d.getFecha().isAfter(fechaInicio) || d.getFecha().equals(fechaInicio) && 
                         d.getFecha().isBefore(fechaFin) || d.getFecha().equals(fechaFin) &&
                             d.getMinerales().contains(material))
                             datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
