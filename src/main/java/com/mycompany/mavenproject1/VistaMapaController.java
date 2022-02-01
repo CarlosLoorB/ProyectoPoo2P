@@ -12,6 +12,7 @@ import Clases.RoverEolico;
 import Clases.RoverSolar;
 import Clases.Ubicacion;
 import DatosApp.CraterData;
+import DatosApp.CraterSensadoData;
 import DatosApp.RoverData;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -72,70 +73,89 @@ public class VistaMapaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try (BufferedReader CS
+                        = new BufferedReader(new FileReader("datos/crateressense.txt")); BufferedReader CL
+                        = new BufferedReader(new FileReader("datos/crateres_info.txt"));) {
         System.out.println("hola");
-       List<MainRover> rovers = RoverData.cargarRovers();
-       pestanaRobot.getItems().addAll(rovers);
-       craters = CraterData.cargarCrater();
-       for(Crater crater: craters){
-           Circle c = crater.getCirculo();
-           c.setStroke(Color.RED);
-           paneMapa.getChildren().addAll(c);
-           c.setLayoutX(crater.getLatitud());
-           c.setLayoutY(crater.getLongitud());
-           c.setOnMouseClicked((MouseEvent ev) -> {
-               ev.consume();
-               try (BufferedReader Cs
-                       = new BufferedReader(new FileReader("datos/crateressense.txt")); BufferedReader Cl
-                       = new BufferedReader(new FileReader("datos/crateres_info.txt"));) {
-                   String linea;
-                   boolean encontrado = false;
-                   while ((linea = Cs.readLine()) != null) {
-                       String[] p = linea.split(",");
-                       if(Integer.parseInt(p[0]) == crater.getId()){
-                         DescripcionCrater.setText((p[0])+" ya ha sido sensado");
-                         encontrado = true;
-                       }
-                   }
-                   while ((linea = Cl.readLine()) != null && encontrado == false) {
-                       String[] p = linea.split(",");
-                       if(Integer.parseInt(p[0]) == crater.getId()){
-                         DescripcionCrater.setText(p[0]+","+p[1]);
-                       }
-                   }
-               } catch (IOException ex) {
-                   Alert a = new Alert(Alert.AlertType.ERROR);
-                   a.setContentText("Error al leer el archivo" + ex.getMessage());
-                   a.show();
-               }
-           });
-       }    
-    }    
+        List<MainRover> rovers = RoverData.cargarRovers();
+        List<CraterSensadoData> craterSense = CraterSensadoData.leerCratersSensados();
+        pestanaRobot.getItems().addAll(rovers);
+        craters = CraterData.cargarCrater();
+        for (Crater crater : craters) {
+            Circle c = crater.getCirculo();
+            c.setStroke(Color.RED);
+            String lineas;
+            for ( CraterSensadoData csd : craterSense){
+            if (csd.getNombre().equals(crater.getNombre())) {// aqui debe de ir el de crater sensado
+                c.setFill(Color.RED);
+                System.out.println("Entra al fill del crater " + crater.getId());
+            }
+            }
+            paneMapa.getChildren().addAll(c);
+            c.setLayoutX(crater.getLatitud());
+            c.setLayoutY(crater.getLongitud());
+            c.setOnMouseClicked((MouseEvent ev) -> {
+                ev.consume();
+                try (BufferedReader Cs
+                        = new BufferedReader(new FileReader("datos/crateressense.txt")); BufferedReader Cl
+                        = new BufferedReader(new FileReader("datos/crateres_info.txt"));) {
+                    String linea;
+                    boolean encontrado = false;
+                    while ((linea = Cs.readLine()) != null) {
+                        String[] p = linea.split(",");
+                        if (Integer.parseInt(p[0]) == crater.getId()) {
+                            DescripcionCrater.setText((p[0]) + " ya ha sido sensado");
+                            encontrado = true;
+                        }
+                    }
+                    while ((linea = Cl.readLine()) != null && encontrado == false) {
+                        String[] p = linea.split(",");
+                        if (Integer.parseInt(p[0]) == crater.getId()) {
+                            DescripcionCrater.setText(p[0] + "," + p[1]);
+                        }
+                    }
+                } catch (IOException ex) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Error al leer el archivo" + ex.getMessage());
+                    a.show();
+                }
+            });
+        }} catch (IOException ex) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Error al leer el archivo" + ex.getMessage());
+                    a.show();
+                }
+    }
+
     /**
      * Permite seleccionar el rover deseado y mostrarlo en la pantalla
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void seleccionarRobot(ActionEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
-        pestanaRobot.setOnMouseClicked((event2)->{     
-            Platform.runLater(()->{
+        pestanaRobot.setOnMouseClicked((event2) -> {
+            Platform.runLater(() -> {
                 paneMapa.getChildren().remove(roverSelec.getRectangle());
-            });     
+            });
         });
-        System.out.println(roverSelec.getNombre());      
+        System.out.println(roverSelec.getNombre());
         paneMapa.getChildren().addAll(roverSelec.getRectangle());
         roverSelec.getRectangle().setLayoutX(roverSelec.getUbicacion().getUbicacionX());
         roverSelec.getRectangle().setLayoutY(roverSelec.getUbicacion().getUbicacionY());
     }
+
     /**
      * Permite leer el comando ingresado y ejecutarlo
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void ejecutarComando(KeyEvent event) {
         MainRover roverSelec = pestanaRobot.getValue();
         if (event.getCode() == KeyCode.ENTER) {
-            if(roverSelec == null){
+            if (roverSelec == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setTitle("Comando invalido");
@@ -165,7 +185,7 @@ public class VistaMapaController implements Initializable {
                         alert.setContentText("Ingrese un solo angulo.");
                         alert.showAndWait();
                     }
-                } else if (ventanaComando.getText().trim().contains("hazlo:")) {
+                } else if (ventanaComando.getText().trim().contains("dirigirse:")) {
                     String[] lista = ventanaComando.getText().split(":");
                     int cantIntervalos = roverSelec.dirigirse(Double.parseDouble(lista[1]), Double.parseDouble(lista[2]));
                     int espera = ((cantIntervalos * 100) + 100);

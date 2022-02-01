@@ -1,2 +1,6 @@
 33,Seymour,2022-01-29;hematita
 12,Sayers,2022-01-30;opalina;filosilicatos;hematita;goethita
+34,Dix,2022-01-31;opalina;filosilicatos;jarosita;goethita;hematita
+34,Dix,2022-01-31;opalina;hematita
+34,Dix,2022-01-31;opalina;hematita;filosilicatos;goethita
+34,Dix,2022-01-31;hematita;goethita;opalina;jarosita;filosilicatos
