@@ -176,13 +176,13 @@ public class VistaReporteController implements Initializable {
         tbvTabla.setItems(filtrar());
 
     }
-
+/*
     @FXML
     private void refrescarTabla(ActionEvent event) {
         tbvTabla.getItems().clear();
         tbvTabla.setItems(datosTabla);
     }
-
+*/
     @FXML
     private void Regresar(MouseEvent event) throws IOException {
         App.setRoot("VistaIncial");
