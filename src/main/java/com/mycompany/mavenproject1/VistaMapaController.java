@@ -92,7 +92,7 @@ public class VistaMapaController implements Initializable {
                    while ((linea = Cs.readLine()) != null) {
                        String[] p = linea.split(",");
                        if(Integer.parseInt(p[0]) == crater.getId()){
-                         DescripcionCrater.setText(linea);
+                         DescripcionCrater.setText((p[0])+" ya ha sido sensado");
                          encontrado = true;
                        }
                    }
@@ -215,5 +215,10 @@ public class VistaMapaController implements Initializable {
             }
 
         }
+    }
+
+    @FXML
+     private void Regresar(MouseEvent event) throws IOException {
+        App.setRoot("VistaIncial");
     }
 }

@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -168,6 +169,11 @@ public class VistaReporteController implements Initializable {
     private void refrescarTabla(ActionEvent event) {
         tbvTabla.getItems().clear();
         tbvTabla.setItems(datosTabla);
+    }
+
+    @FXML
+    private void Regresar(MouseEvent event) throws IOException {
+        App.setRoot("VistaIncial");
     }
     
     public static class TableData {
