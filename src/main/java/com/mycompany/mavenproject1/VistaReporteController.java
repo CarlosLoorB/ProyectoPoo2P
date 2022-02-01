@@ -113,37 +113,37 @@ public class VistaReporteController implements Initializable {
         if(fechaInicio !=null && fechaFin != null && material != null){
             
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isAfter(fechaInicio) && 
-                        d.getFecha().isBefore(fechaFin) &&
+                if(d.getFecha().isAfter(fechaInicio) || d.getFecha().equals(fechaInicio)&& 
+                        d.getFecha().isBefore(fechaFin) || d.getFecha().equals(fechaFin) &&
                             d.getMinerales().contains(material))
                             datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }else if(fechaInicio == null && fechaFin != null && material!= null){
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isBefore(fechaFin) &&
+                if(d.getFecha().isBefore(fechaFin) || d.getFecha().equals(fechaFin) &&
                         d.getMinerales().contains(material))
                         datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }else if(fechaInicio != null && fechaFin == null && material!= null){
              for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isAfter(fechaInicio) &&
+                if(d.getFecha().isAfter(fechaInicio) || d.getFecha().equals(fechaInicio) &&
                         d.getMinerales().contains(material))
                         datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }else if(fechaInicio != null && fechaFin != null && material == null){
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isAfter(fechaInicio) &&
-                        d.getFecha().isBefore(fechaFin))
+                if(d.getFecha().isAfter(fechaInicio) || d.getFecha().equals(fechaInicio) &&
+                        d.getFecha().isBefore(fechaFin) || d.getFecha().equals(fechaFin))
                         datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }else if(fechaInicio != null && fechaFin == null && material == null){
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isAfter(fechaInicio))
+                if(d.getFecha().isAfter(fechaInicio) || d.getFecha().equals(fechaInicio))
                         datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }else if(fechaInicio == null && fechaFin != null && material == null){
             for(CraterSensadoData d : datosCrateres){
-                if(d.getFecha().isBefore(fechaFin))
+                if(d.getFecha().isBefore(fechaFin) || d.getFecha().equals(fechaFin))
                         datos.add(new TableData(d.getNombre(), d.getFecha().toString(), d.getMinerales().toString()));                      
             }
         }else if(fechaInicio == null && fechaFin == null && material != null){
