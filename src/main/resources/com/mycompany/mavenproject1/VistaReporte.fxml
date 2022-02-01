@@ -59,7 +59,6 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#buscarExploracion" text="Buscar" />
-                  <Button mnemonicParsing="false" onAction="#refrescarTabla" text="Refrescar" />
                </children>
             </HBox>
          </children>
